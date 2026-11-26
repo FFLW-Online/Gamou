@@ -1,0 +1,6 @@
+Hier kommen eigene, frei nutzbare Fotos hinein (JPG, ca. 900 Pixel breit):
+domoda.jpg
+bohnen.jpg
+haehnchen.jpg
+linsen.jpg
+Gibt es die Datei nicht, zeigt die App das Unsplash-Bild aus dem Internet, sonst ein Symbol.

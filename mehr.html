@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#b45309" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Gamou Rezepte" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="description" content="Blutdruckfreundlich kochen mit afrikanischen und gambischen Rezepten wie Domoda und Bohnen-Tomaten-Topf. Dynamischer Portionsrechner von 1 bis 100 Portionen als PWA." />
+  <title>Gamou-Rezepte &amp; Blutdruck PWA – Dynamischer Portionsrechner</title>
+
+  <!-- Dynamisches Web App Manifest (Data-URI / Blob-kompatibel für Single-File-PWA) -->
+  <link id="dynamic-manifest-link" rel="manifest" href='data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22Gamou-Rezepte%20%26%20Blutdruck%20PWA%22%2C%22short_name%22%3A%22Gamou%20Rezepte%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23fafaf9%22%2C%22theme_color%22%3A%22%23b45309%22%7D' />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Inter Schriftart -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+          colors: {
+            warm: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              200: '#fde68a',
+              600: '#d97706',
+              700: '#b45309',
+              800: '#92400e',
+              900: '#78350f',
+            },
+            leaf: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              700: '#15803d',
+              800: '#166534',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Druckfreundliche Darstellung */
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+      body {
+        background: #ffffff !important;
+        color: #111827 !important;
+      }
+      section, article {
+        break-inside: avoid;
+        box-shadow: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-stone-50 text-stone-800 antialiased selection:bg-amber-200 selection:text-stone-900"><a href="index.html" style="display:block;position:sticky;top:0;z-index:99;background:#b4532a;color:#fff;font:700 18px/1 system-ui,sans-serif;padding:16px;text-decoration:none">← Zurück zu den einfachen Rezepten</a>
+
+  <!-- Kopfbereich & Navigation -->
+  <header class="bg-gradient-to-br from-amber-900 via-amber-800 to-stone-900 text-white shadow-lg">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <nav aria-label="Hauptnavigation" class="no-print flex flex-wrap items-center justify-between gap-3 pb-5 mb-6 border-b border-amber-700/60 text-sm">
+        <a href="#top" class="font-bold tracking-wide text-amber-200 hover:text-white flex items-center gap-2">
+          <span aria-hidden="true">🍲</span>
+          <span>Gamou-Rezepte &amp; Blutdruck</span>
+        </a>
+        <div class="flex flex-wrap gap-2 sm:gap-4 text-amber-100">
+          <a href="#prinzip" class="hover:text-white transition">1. Prinzip</a>
+          <a href="#zutaten-welt" class="hover:text-white transition">2. Lebensmittel</a>
+          <a href="#rezepte" class="hover:text-white transition">3. Rezepte</a>
+          <a href="#alltag" class="hover:text-white transition">4. Alltag</a>
+          <a href="#meal-prep" class="hover:text-white transition">5. Vorkochen</a>
+          <a href="#einkaufsliste" class="hover:text-white transition">6. Einkauf</a>
+          <a href="#hinweise" class="hover:text-white transition">7–8. Hinweise</a>
+        </div>
+      </nav>
+
+      <div id="top" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+        <div class="lg:col-span-8 space-y-4">
+          <div class="inline-flex items-center gap-2 bg-amber-700/60 border border-amber-500/40 text-amber-100 text-xs sm:text-sm font-medium px-3 py-1.5 rounded-full">
+           <!-- <span>Basis: Gamou-Rezept-Blutdruck-01.pdf</span> -->
+            <span>•</span>
+            <span>Originalrezepte: 3 Portionen</span>
+          </div>
+          <h1 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
+            Blutdruckfreundlich kochen – mit afrikanischen Klassikern &amp; Portionsrechner
+          </h1>
+          <p class="text-amber-100/95 text-sm sm:text-base lg:text-lg leading-relaxed max-w-3xl">
+            Du kannst weiterhin afrikanisch essen, kräftig würzen und Erdnusssauce genießen – mit weniger Salz, weniger Fertigwürze sowie mehr Gemüse, Bohnen und guten Ölen. Alle Mengenangaben lassen sich hier live von <strong>1 bis 100 Portionen</strong> umrechnen.
+          </p>
+        </div>
+
+        <div class="lg:col-span-4 bg-white/10 backdrop-blur-sm border border-white/15 rounded-2xl p-5 space-y-3">
+          <p class="text-xs uppercase tracking-wider text-amber-200 font-semibold">Kernbotschaft aus dem Leitfaden</p>
+          <p class="text-sm sm:text-base font-medium leading-relaxed text-white">
+            „Du kannst weiterhin afrikanisch essen. Du kannst weiterhin Erdnusssauce essen. Du kannst gut und kräftig würzen – nur an einigen Stellen anders kochen.“
+          </p>
+          <div class="pt-2 flex flex-wrap gap-2">
+            <a href="#rezepte" class="inline-flex items-center justify-center bg-amber-500 hover:bg-amber-400 text-stone-950 font-semibold text-sm px-4 py-2.5 rounded-xl transition shadow">
+              Zu den Rezepten &amp; Rechner
+            </a>
+            <button type="button" id="pwa-install-btn" class="no-print inline-flex items-center justify-center bg-leaf-100 hover:bg-white text-stone-950 font-bold text-sm px-4 py-2.5 rounded-xl transition shadow">
+              📲 Als App installieren / Handy-Hilfe
+            </button>
+            <button type="button" onclick="window.print()" class="no-print inline-flex items-center justify-center bg-white/15 hover:bg-white/25 text-white font-medium text-sm px-3.5 py-2.5 rounded-xl transition">
+              Drucken / PDF
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Installations- und Handy-Anleitung (ein-/ausklappbar) -->
+  <div id="pwa-install-guide" class="no-print hidden max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+    <div class="rounded-2xl border-2 border-amber-400 bg-amber-50 p-5 sm:p-6 shadow-sm space-y-4">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-amber-800">Progressive Web App (PWA) • Handy &amp; Tablet</span>
+          <h2 class="text-lg sm:text-xl font-extrabold text-stone-900 mt-0.5">
+            So installierst du die App auf deinem Handy
+          </h2>
+        </div>
+        <button type="button" id="close-install-guide" aria-label="Installationshilfe schließen" class="px-3 py-1.5 rounded-xl bg-amber-200/80 hover:bg-amber-300 text-stone-950 font-bold text-sm">
+          ✕
+        </button>
+      </div>
+
+      <div id="pwa-status-msg" class="text-xs sm:text-sm font-medium text-stone-800 bg-white/90 border border-amber-200 rounded-xl p-3"></div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm text-stone-700">
+        <div class="bg-white rounded-xl p-4 border border-amber-200/80 space-y-1.5">
+          <h3 class="font-bold text-stone-900">1. Datei hochladen / öffnen</h3>
+          <p>
+            Lade diese HTML-Datei auf deinen Webspace oder sende sie dir aufs Handy (z. B. per Cloud, Messenger oder Kabel) und öffne sie in <strong>Chrome</strong> oder <strong>Safari</strong>.
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-4 border border-amber-200/80 space-y-1.5">
+          <h3 class="font-bold text-stone-900">2. Android (Chrome)</h3>
+          <p>
+            Tippe oben rechts auf das <strong>Drei-Punkte-Menü (⋮)</strong> und wähle <strong>„App installieren“</strong> oder <strong>„Zum Startbildschirm hinzufügen“</strong>.
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-4 border border-amber-200/80 space-y-1.5">
+          <h3 class="font-bold text-stone-900">3. iPhone / iPad (Safari)</h3>
+          <p>
+            Tippe unten in Safari auf das <strong>Teilen-Symbol</strong> (Quadrat mit Pfeil nach oben), scrolle runter und wähle <strong>„Zum Home-Bildschirm“</strong>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Klebrige Portionssteuerung: Auswahlknöpfe + direkte Zahleneingabe (1–100 Portionen) -->
+  <div id="portions-rechner" class="no-print sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-amber-200 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+        <div class="flex flex-wrap items-center gap-3">
+          <label for="portion-number-input" class="font-bold text-stone-900 text-sm sm:text-base">
+            Portionen (1–100):
+          </label>
+          <div class="flex items-center gap-2">
+            <button type="button" id="btn-decrease" aria-label="Eine Portion weniger" class="w-10 h-10 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold text-lg flex items-center justify-center transition">
+              −
+            </button>
+            <input
+              type="number"
+              id="portion-number-input"
+              min="1"
+              max="100"
+              value="3"
+              class="w-20 text-center font-extrabold text-lg border-2 border-amber-400 focus:border-amber-700 rounded-xl py-1.5 text-stone-900 bg-amber-50/60"
+            />
+            <button type="button" id="btn-increase" aria-label="Eine Portion mehr" class="w-10 h-10 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold text-lg flex items-center justify-center transition">
+              +
+            </button>
+          </div>
+          <span id="portion-factor-badge" class="text-xs sm:text-sm font-semibold px-3 py-1 rounded-full bg-leaf-100 text-leaf-800">
+            Faktor: 1.00× (Original: 3 Portionen)
+          </span>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2" role="group" aria-label="Schnellauswahl Portionen">
+          <button type="button" data-preset="1" class="preset-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border border-amber-300 bg-amber-50 hover:bg-amber-200 text-amber-950 transition">
+            1 Portion
+          </button>
+          <button type="button" data-preset="3" class="preset-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border border-amber-300 bg-amber-50 hover:bg-amber-200 text-amber-950 transition">
+            3 Portionen (Basis)
+          </button>
+          <button type="button" data-preset="10" class="preset-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border border-amber-300 bg-amber-50 hover:bg-amber-200 text-amber-950 transition">
+            10 Portionen
+          </button>
+          <button type="button" data-preset="20" class="preset-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border border-amber-300 bg-amber-50 hover:bg-amber-200 text-amber-950 transition">
+            20 Portionen
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hauptinhalt -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-14">
+
+    <!-- Abschnitt 1: Das Prinzip -->
+    <section id="prinzip" class="bg-white rounded-3xl shadow-sm border border-stone-200/80 p-6 sm:p-8 space-y-6">
+      <div class="border-b border-stone-100 pb-4">
+        <span class="text-xs font-bold uppercase tracking-wider text-amber-700">Kapitel 1</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-stone-900 mt-1">
+          Zunächst das Prinzip: Was treibt den Blutdruck nach oben?
+        </h2>
+        <p class="text-stone-600 mt-2 leading-relaxed">
+          Der Blutdruck wird unter anderem durch die <strong>Blutmenge</strong>, die <strong>Spannung der Blutgefäße</strong> sowie den <strong>Salz- und Wasserhaushalt</strong> beeinflusst.
+        </p>
+      </div>
+
+      <!-- Vergleichstabelle Eher ungünstig vs. Besser -->
+      <div class="overflow-x-auto rounded-2xl border border-stone-200">
+        <table class="w-full text-left border-collapse text-sm sm:text-base">
+          <thead>
+            <tr class="bg-stone-100 text-stone-900">
+              <th class="p-4 font-bold w-1/2 border-b border-r border-stone-200 text-rose-800 bg-rose-50/70">
+                Eher ungünstig
+              </th>
+              <th class="p-4 font-bold w-1/2 border-b border-stone-200 text-leaf-800 bg-leaf-50/70">
+                Besser
+              </th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-stone-200">
+            <tr>
+              <td class="p-4 align-top border-r border-stone-200 bg-rose-50/20 font-medium text-stone-800">
+                Viel Salz
+              </td>
+              <td class="p-4 align-top bg-leaf-50/20 font-medium text-stone-800">
+                Weniger Salz, mehr Kräuter und Gewürze
+              </td>
+            </tr>
+            <tr>
+              <td class="p-4 align-top border-r border-stone-200 bg-rose-50/20">
+                <ul class="list-disc pl-5 space-y-1.5 text-stone-700">
+                  <li>Fertiggerichte, Instantnudeln</li>
+                  <li>Wurst, geräuchertes Fleisch</li>
+                  <li>Viel Butter und fettes Fleisch</li>
+                  <li>Süße Getränke und viel Zucker</li>
+                  <li>Wenig Gemüse und Obst</li>
+                </ul>
+              </td>
+              <td class="p-4 align-top bg-leaf-50/20">
+                <ul class="list-disc pl-5 space-y-1.5 text-stone-700">
+                  <li>Frisch oder einfach selbst kochen</li>
+                  <li>Fisch, Bohnen</li>
+                  <li>Olivenöl oder Rapsöl</li>
+                  <li>Wasser, ungesüßter Tee</li>
+                  <li>Täglich reichlich Gemüse und Obst</li>
+                  <li>Hähnchen</li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 4 Gründe im Detail -->
+      <div>
+        <h3 class="text-xl font-bold text-stone-900 mb-4">Warum sind diese Stoffe problematisch?</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div class="rounded-2xl border border-amber-200 bg-amber-50/50 p-5 space-y-2.5">
+            <h4 class="font-bold text-lg text-stone-900">1. Salz (Natrium)</h4>
+            <p class="text-sm text-stone-700 leading-relaxed">
+              Das ist einer der wichtigsten Punkte. Zu viel Natrium führt dazu, dass der Körper mehr Wasser zurückhält. Dadurch kann das Blutvolumen steigen und der Blutdruck zunehmen.
+            </p>
+            <p class="text-xs font-semibold uppercase tracking-wide text-amber-900 pt-1">
+              Besonders viel Salz steckt oft in:
+            </p>
+            <ul class="list-disc pl-5 text-sm text-stone-700 space-y-1">
+              <li>Brühwürfeln (auch afrikanischen Würzprodukten wie Maggi)</li>
+              <li>Fertigsuppen und Instantnudeln</li>
+              <li>Wurst und geräuchertem Fleisch</li>
+              <li>Chips und salzigen Erdnüssen</li>
+              <li>Fertigsaucen</li>
+            </ul>
+            <p class="text-xs sm:text-sm font-medium text-stone-900 bg-white/80 p-3 rounded-xl border border-amber-200/80">
+              <strong>Wichtig:</strong> Nicht nur das Salz aus dem Salzstreuer zählt. Auch verstecktes Salz ist entscheidend.
+            </p>
+          </div>
+
+          <div class="rounded-2xl border border-stone-200 bg-stone-50 p-5 space-y-2.5">
+            <h4 class="font-bold text-lg text-stone-900">2. Ungünstige Fette</h4>
+            <p class="text-sm text-stone-700 leading-relaxed">
+              Sehr viel gesättigtes Fett, beispielsweise aus fettem Fleisch, Butter und manchen Fertigprodukten, ist ungünstig für die Gefäßgesundheit.
+            </p>
+            <p class="text-xs font-semibold uppercase tracking-wide text-leaf-800 pt-1">
+              Besser sind ungesättigte Fette aus:
+            </p>
+            <ul class="list-disc pl-5 text-sm text-stone-700 space-y-1">
+              <li>Olivenöl und Rapsöl</li>
+              <li>Ungesalzenen Erdnüssen</li>
+              <li>Fisch</li>
+              <li>Samen und Nüssen</li>
+            </ul>
+          </div>
+
+          <div class="rounded-2xl border border-stone-200 bg-stone-50 p-5 space-y-2.5">
+            <h4 class="font-bold text-lg text-stone-900">3. Zucker und stark verarbeitete Lebensmittel</h4>
+            <p class="text-sm text-stone-700 leading-relaxed">
+              Sie können Übergewicht und Stoffwechselprobleme begünstigen, die wiederum den Blutdruck erhöhen können.
+            </p>
+          </div>
+
+          <div class="rounded-2xl border border-stone-200 bg-leaf-50/50 p-5 space-y-2.5">
+            <h4 class="font-bold text-lg text-stone-900">4. Zu wenig Kalium</h4>
+            <p class="text-sm text-stone-700 leading-relaxed">
+              Kalium unterstützt die Regulation des Blutdrucks. Gute Quellen sind:
+            </p>
+            <ul class="list-disc pl-5 text-sm text-stone-700 space-y-1">
+              <li>Bananen</li>
+              <li>Bohnen und Linsen</li>
+              <li>Spinat</li>
+              <li>Tomaten</li>
+              <li>Kartoffeln</li>
+              <li>Avocados</li>
+            </ul>
+            <p class="text-xs sm:text-sm font-medium text-amber-950 bg-amber-100/80 p-3 rounded-xl border border-amber-300">
+              <strong>Wichtig:</strong> Bei Nierenerkrankungen oder bestimmten Medikamenten kann eine erhöhte Kaliumzufuhr gefährlich sein. Dann vorher ärztlich abklären.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Abschnitt 2: Afrikanische Lebensmittel & Gewürze -->
+    <section id="zutaten-welt" class="bg-white rounded-3xl shadow-sm border border-stone-200/80 p-6 sm:p-8 space-y-6">
+      <div class="border-b border-stone-100 pb-4">
+        <span class="text-xs font-bold uppercase tracking-wider text-leaf-700">Kapitel 2</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-stone-900 mt-1">
+          Die gute Nachricht: Viele afrikanische Lebensmittel sind ideal
+        </h2>
+      </div>
+
+      <!-- Bild aus dem PDF (Seite 3: Hülsenfrüchte-Schalen) + Referenzen aus dem PDF -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center bg-stone-50 rounded-2xl p-4 sm:p-6 border border-stone-200">
+        <div class="lg:col-span-5">
+          <figure class="overflow-hidden rounded-2xl border border-stone-200 bg-stone-900 shadow-sm">
+            <img
+              src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=80"
+              data-fallback-label="Hülsenfrüchte & Bohnen (PDF S. 3)"
+              alt="Verschiedene Hülsenfrüchte, Bohnen und Linsen in Schalen wie auf Seite 3 des PDFs"
+              class="w-full h-60 object-cover"
+              onerror="handleImageError(this)"
+            />
+            <figcaption class="px-3.5 py-2.5 text-xs text-stone-300 bg-stone-900 flex items-center justify-between gap-2">
+              <span>Hülsenfrüchte &amp; Bohnen (aus PDF S. 3)</span>
+              <span class="text-amber-300">Kalium &amp; Ballaststoffe</span>
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="lg:col-span-7 space-y-4">
+          <h3 class="text-lg font-bold text-stone-900">Stichworte &amp; Quellen aus Kapitel 2 des PDFs</h3>
+          <ul class="space-y-2 text-sm text-stone-700">
+            <li class="p-2.5 rounded-xl bg-white border border-stone-200">
+              <strong>Articles: A balanced diet – Tearfund Learn</strong> (Gemüse: Spinat, Tomaten, Karotten, Süßkartoffeln, Zwiebeln)
+            </li>
+            <li class="p-2.5 rounded-xl bg-white border border-stone-200">
+              <strong>Nasiona roślin strączkowych – rodzaje, wartości odżywcze, kto powinien z nich zrezygnować – Odżywianie Wprost</strong> (Hülsenfrüchte: Bohnen, Linsen, Kichererbsen)
+            </li>
+            <li class="p-2.5 rounded-xl bg-white border border-stone-200">
+              <strong>bowl of creamy butter peanut</strong> (Erdnüsse: möglichst ungesalzen, als Mus oder Sauce)
+            </li>
+            <li class="p-2.5 rounded-xl bg-white border border-stone-200">
+              <strong>Fresh fish with lemon and vegetables</strong> (Fisch: z. B. Makrele, Sardinen oder Lachs)
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 4 Karten zu Lebensmitteln & Gewürzen -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="rounded-2xl border border-stone-200 p-4 bg-stone-50/60">
+          <h4 class="font-bold text-stone-900 mb-2">Gemüse</h4>
+          <p class="text-sm text-stone-700">Spinat, Tomaten, Karotten, Süßkartoffeln, Zwiebeln.</p>
+        </div>
+        <div class="rounded-2xl border border-stone-200 p-4 bg-stone-50/60">
+          <h4 class="font-bold text-stone-900 mb-2">Hülsenfrüchte</h4>
+          <p class="text-sm text-stone-700">Bohnen, Linsen, Kichererbsen.</p>
+        </div>
+        <div class="rounded-2xl border border-stone-200 p-4 bg-stone-50/60">
+          <h4 class="font-bold text-stone-900 mb-2">Erdnüsse &amp; Fisch</h4>
+          <p class="text-sm text-stone-700">
+            Erdnüsse möglichst ungesalzen als Mus oder Sauce. Fisch z. B. Makrele, Sardinen oder Lachs.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-stone-200 p-4 bg-leaf-50/60">
+          <h4 class="font-bold text-stone-900 mb-2">Besonders gute Gewürze</h4>
+          <p class="text-xs text-stone-700 leading-relaxed">
+            Knoblauch, Ingwer, Chili, Zitronensaft, Pfeffer, Curry, Paprika, frische Petersilie oder Koriander – für viel Aroma bei wenig Salz.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Abschnitt 3: Vier einfache Rezepte (dynamisch skalierbar 1–100) -->
+    <section id="rezepte" class="space-y-6">
+      <div class="bg-white rounded-3xl shadow-sm border border-stone-200/80 p-6 sm:p-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-stone-100 pb-5">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-700">Kapitel 3 • Dynamisch umrechenbar</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-stone-900 mt-1">
+              Vier einfache Rezepte
+            </h2>
+            <p class="text-stone-600 mt-2 max-w-3xl leading-relaxed">
+              Die Rezepte sind im PDF jeweils für etwa <strong>2–3 Portionen</strong> (Basis: <strong>3 Portionen</strong>) gedacht und eignen sich gut zum Vorkochen und Aufbewahren im Kühlschrank. Alle Mengenangaben unten passen sich automatisch an deine gewählte Portionszahl an.
+            </p>
+          </div>
+          <div class="bg-amber-100 text-amber-950 px-4 py-2.5 rounded-2xl text-sm font-bold shrink-0">
+            Aktuell berechnet für: <span id="active-portions-display">3</span> Portionen
+          </div>
+        </div>
+
+        <!-- Container für die 4 Rezepte (wird per JS gerendert & aktualisiert) -->
+        <div id="recipes-container" class="mt-8 space-y-8"></div>
+      </div>
+    </section>
+
+    <!-- Abschnitt 4: Drei schnelle Mahlzeiten für den Alltag -->
+    <section id="alltag" class="bg-white rounded-3xl shadow-sm border border-stone-200/80 p-6 sm:p-8 space-y-6">
+      <div class="border-b border-stone-100 pb-4">
+        <span class="text-xs font-bold uppercase tracking-wider text-amber-700">Kapitel 4</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-stone-900 mt-1">
+          Drei weitere schnelle Mahlzeiten für den Alltag
+        </h2>
+        <p class="text-stone-600 mt-1.5">
+          Damit du nicht jeden Tag lange kochen musst – ebenfalls auf <strong class="current-portion-text">3</strong> Portionen umgerechnet:
+        </p>
+      </div>
+
+      <div id="daily-meals-container" class="grid grid-cols-1 lg:grid-cols-3 gap-6"></div>
+    </section>
+
+    <!-- Abschnitt 5: Kochen leichter machen (Meal-Prep & Sicherheit) -->
+    <section id="meal-prep" class="bg-white rounded-3xl shadow-sm border border-stone-200/80 p-6 sm:p-8 space-y-6">
+      <div class="border-b border-stone-100 pb-4">
+        <span class="text-xs font-bold uppercase tracking-wider text-amber-700">Kapitel 5</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-stone-900 mt-1">
+          Wie du dir das Kochen leichter machen kannst
+        </h2>
+        <p class="text-stone-600 mt-1.5">
+          Es muss nicht jeden Tag frisch gekocht werden. Ein einfaches System spart Zeit und hält die Ernährung im Alltag stabil:
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="rounded-2xl bg-amber-50/70 border border-amber-200 p-5 space-y-3">
+          <h3 class="font-bold text-lg text-stone-900">Wochenplan &amp; Vorkochen</h3>
+          <ul class="list-disc pl-5 space-y-2 text-sm text-stone-700 leading-relaxed">
+            <li>Am Sonntag einen großen Topf <strong>Domoda</strong> kochen.</li>
+            <li>Einen großen Topf <strong>Bohnen</strong> oder <strong>Linsen</strong> zubereiten.</li>
+            <li><strong>Reis</strong> für zwei Tage vorkochen.</li>
+            <li>Portionen in verschließbare Behälter füllen.</li>
+            <li>Zwei bis drei Portionen einfrieren.</li>
+          </ul>
+        </div>
+
+        <div class="rounded-2xl bg-sky-50/70 border border-sky-200 p-5 space-y-3">
+          <h3 class="font-bold text-lg text-stone-900">Aufbewahrung &amp; Hygiene</h3>
+          <ul class="list-disc pl-5 space-y-2 text-sm text-stone-700 leading-relaxed">
+            <li>Gekochtes Essen sollte möglichst <strong>innerhalb von zwei Stunden</strong> gekühlt werden.</li>
+            <li>Im Kühlschrank bei <strong>höchstens 5 °C</strong> aufbewahren.</li>
+            <li>Innerhalb von <strong>zwei bis drei Tagen</strong> verbrauchen.</li>
+            <li>Beim Aufwärmen <strong>vollständig durcherhitzen</strong>.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Abschnitt 6: Einkaufsliste -->
+    <section id="einkaufsliste" class="bg-white rounded-3xl shadow-sm border border-stone-200/80 p-6 sm:p-8 space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-100 pb-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-amber-700">Kapitel 6 • Interaktiv</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-stone-900 mt-1">
+            Eine kleine Einkaufsliste
+          </h2>
+          <p class="text-stone-600 mt-1 text-sm sm:text-base">
+            Diese Lebensmittel sind in Deutschland relativ günstig und fast überall erhältlich (berechnet für <strong class="current-portion-text">3</strong> Portionen).
+          </p>
+        </div>
+
+        <div class="no-print flex flex-wrap gap-2">
+          <button type="button" id="copy-shopping-btn" class="px-4 py-2 rounded-xl bg-amber-700 hover:bg-amber-800 text-white text-sm font-semibold transition">
+            Liste kopieren
+          </button>
+          <button type="button" id="clear-checks-btn" class="px-4 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-800 text-sm font-semibold transition">
+            Häkchen löschen
+          </button>
+        </div>
+      </div>
+
+      <div id="copy-feedback" class="hidden text-sm font-medium text-leaf-800 bg-leaf-100 border border-leaf-300 px-4 py-2.5 rounded-xl"></div>
+
+      <div class="overflow-x-auto rounded-2xl border border-stone-200">
+        <table class="w-full text-left border-collapse text-sm sm:text-base">
+          <thead>
+            <tr class="bg-stone-100 text-stone-900 border-b border-stone-200">
+              <th class="p-3.5 w-12 text-center font-bold">✓</th>
+              <th class="p-3.5 font-bold">Lebensmittel</th>
+              <th class="p-3.5 font-bold">Richtmenge (<span class="current-portion-text">3</span> Port.)</th>
+              <th class="p-3.5 font-bold">Verwendung</th>
+            </tr>
+          </thead>
+          <tbody id="shopping-list-body" class="divide-y divide-stone-200"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Abschnitt 7 & 8: Wichtige Hinweise & Kernbotschaft -->
+    <section id="hinweise" class="space-y-6">
+      <div class="bg-white rounded-3xl shadow-sm border border-stone-200/80 p-6 sm:p-8 space-y-5">
+        <div class="border-b border-stone-100 pb-4">
+          <span class="text-xs font-bold uppercase tracking-wider text-rose-700">Kapitel 7</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-stone-900 mt-1">
+            Noch drei wichtige Hinweise zum Blutdruck
+          </h2>
+        </div>
+
+        <div class="space-y-4 text-sm sm:text-base text-stone-700 leading-relaxed">
+          <div class="p-4 sm:p-5 rounded-2xl bg-stone-50 border border-stone-200">
+            <h3 class="font-bold text-stone-900 text-lg mb-1">1. Ärztliche Abklärung &amp; Medikamente</h3>
+            <p>
+              Ernährung allein reicht möglicherweise nicht. Wenn wiederholt hohe Blutdruckwerte auftreten, sollte unbedingt eine ärztliche Untersuchung erfolgen – gerade bei einem jungen Menschen sollte man nach den Ursachen schauen. <strong>Medikamente dürfen nicht eigenständig abgesetzt werden.</strong>
+            </p>
+          </div>
+
+          <div class="p-4 sm:p-5 rounded-2xl bg-rose-50/70 border border-rose-200">
+            <h3 class="font-bold text-stone-900 text-lg mb-1">2. Blutdruck regelmäßig messen &amp; Notfallzeichen</h3>
+            <p>
+              Am besten <strong>morgens und abends in Ruhe</strong> messen, jeweils <strong>zweimal im Abstand von ein bis zwei Minuten</strong>. Die Werte notieren und zum Arzt mitnehmen. Bei Werten um <strong>180/120 mmHg oder darüber</strong> nach einer Ruhepause erneut messen und umgehend medizinischen Rat einholen. Bei <strong>Brustschmerzen, Atemnot, neurologischen Ausfällen oder starken akuten Beschwerden sofort 112 wählen</strong>.
+            </p>
+          </div>
+
+          <div class="p-4 sm:p-5 rounded-2xl bg-amber-50/70 border border-amber-200">
+            <h3 class="font-bold text-stone-900 text-lg mb-1">3. Salz unter 5 g/Tag &amp; Vorsicht bei Salzersatz</h3>
+            <p>
+              Die <strong>WHO</strong> empfiehlt <strong>weniger als 5 g Salz täglich insgesamt</strong> – das ist weniger als ein Teelöffel, einschließlich des Salzes, das bereits in Lebensmitteln steckt. Eine Besonderheit: Kalium ist zwar hilfreich, aber <strong>kaliumhaltige Salzersatzprodukte</strong> sollten nicht ohne ärztliche Rücksprache verwendet werden, insbesondere bei Nierenproblemen oder bestimmten Blutdruckmedikamenten.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kapitel 8: Kernbotschaft & Wissenschaftliche Grundlagen -->
+      <div class="bg-gradient-to-br from-leaf-800 to-stone-900 text-white rounded-3xl p-6 sm:p-8 shadow-md space-y-5">
+        <span class="text-xs font-bold uppercase tracking-wider text-amber-300">Kapitel 8</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold">
+          Die wichtigste Botschaft
+        </h2>
+        <p class="text-stone-200 italic">
+          Nicht: „Du darfst vieles nicht mehr essen.“
+        </p>
+        <p class="text-lg sm:text-xl font-semibold text-white leading-relaxed">
+          Sondern: Du kannst weiterhin afrikanisch essen. Du kannst weiterhin Erdnusssauce essen. Du kannst gut und kräftig würzen. Du musst nur an einigen Stellen anders kochen: weniger Salz, weniger Fertigwürze, mehr Gemüse, Bohnen, Obst und gute Öle.
+        </p>
+        <p class="text-sm sm:text-base text-stone-200 leading-relaxed">
+          Das ist eine Ernährungsweise, die dauerhaft beibehalten werden kann, ohne dass Essen zur lästigen Gesundheitsmaßnahme wird. Außerdem lässt sich daraus ein kleines, bebildertes Kochheft mit etwa 10 Rezepten (gambische Gerichte, deutsche Klassiker, Zutaten aus deutschen Supermärkten, Kochzeit, Kosten pro Portion und Aufbewahrung) für die Küche entwickeln.
+        </p>
+
+        <div class="pt-3 border-t border-white/15 flex flex-wrap gap-3 text-sm">
+          <a href="https://www.hochdruckliga.de/" target="_blank" rel="noopener noreferrer" class="bg-white/15 hover:bg-white/25 px-4 py-2 rounded-xl font-semibold transition">
+            Deutsche Hochdruckliga – Bluthochdruck und Ernährung ↗
+          </a>
+          <a href="https://www.who.int/news-room/fact-sheets/detail/healthy-diet" target="_blank" rel="noopener noreferrer" class="bg-white/15 hover:bg-white/25 px-4 py-2 rounded-xl font-semibold transition">
+            WHO – Gesunde Ernährung ↗
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- App / PWA Hinweis für den späteren Ausbau -->
+  <section class="no-print bg-stone-100 border border-stone-200 rounded-3xl p-6 text-sm text-stone-700 space-y-2">
+    <h3 class="font-bold text-stone-900 text-base">Hinweis für die spätere App / PWA</h3>
+    <p>
+      Diese Datei speichert deine gewählte Portionszahl (1–100) und deine Einkaufslisten-Häkchen bereits lokal im Browser (<code>localStorage</code>) und ist für den Druck optimiert. Um daraus eine installierbare Progressive Web App (PWA) zu machen, kannst du diese <code>index.html</code> einfach mit einer <code>manifest.webmanifest</code> und einem <code>service-worker.js</code> ergänzen.
+    </p>
+  </section>
+
+  <!-- PWA / App Hinweis für das Handy -->
+  <section class="no-print bg-amber-50/80 border border-amber-200 rounded-3xl p-6 text-sm text-stone-700 space-y-2">
+    <h3 class="font-bold text-stone-900 text-base">App auf dem Handy nutzen (PWA)</h3>
+    <p>
+      Deine gewählte Portionszahl (1–100) und deine Einkaufslisten-Häkchen bleiben lokal im Browser gespeichert (<code>localStorage</code>). Über den Button <strong>„Als App installieren / Handy-Hilfe“</strong> oben kannst du die Anleitung für Android und iPhone einblenden oder den Installationsdialog deines Browsers starten.
+    </p>
+  </section>
+
+</main>
+
+<footer class="bg-stone-900 text-stone-300 text-xs sm:text-sm py-6 px-4 text-center">
+  <p>Gamou-Rezepte &amp; Blutdruck • Dynamischer Portionsrechner (1–100 Portionen) • Basierend auf Gamou-Rezept-Blutdruck-01.pdf</p>
+</footer>
+
+<!-- Dynamische Logik: PWA-Setup, Portionsrechner (1–100), Rezepte, Alltagsgerichte & Einkaufsliste -->
+<script>
+  (function () {
+    const BASE_PORTIONS = 3;
+    const MIN_PORTIONS = 1;
+    const MAX_PORTIONS = 100;
+    const STORAGE_PORTIONS_KEY = "gamou_portions_v1";
+    const STORAGE_CHECKS_KEY = "gamou_shopping_checks_v1";
+
+    // Rezepte aus Gamou-Rezept-Blutdruck-01.pdf (Basis: 3 Portionen)
+    const RECIPES = [
+      {
+        id: "rezept-1-domoda",
+        badge: "Gambische Küche • Besonders empfehlenswert",
+        title: "Rezept 1: Gambische Erdnusssauce – Domoda",
+        imageUrl: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=80",
+        imageAlt: "Gambische Erdnusssauce Domoda mit Gemüse und Reis",
+        imageCaption: "Domoda (Gambian Peanut Stew)",
+        intro: "Nahrhaft, macht satt und lässt sich wunderbar mit Gemüse kombinieren.",
+        sourceLabel: "Domoda (Gambian Peanut Stew) | Punchfork",
+        sourceUrl: "https://punchfork.com/",
+        ingredients: [
+          { qty: 3, unit: "EL", unitPlural: "EL", name: "ungesüßte Erdnussbutter" },
+          { qty: 1, unit: "Zwiebel", unitPlural: "Zwiebeln", name: "" },
+          { qty: 2, unit: "Knoblauchzehe", unitPlural: "Knoblauchzehen", name: "" },
+          { qty: 2, unit: "Tomate", unitPlural: "Tomaten", name: "(oder eine kleine Dose ungesalzene Tomaten)" },
+          { qty: 1, unit: "Süßkartoffel", unitPlural: "Süßkartoffeln", name: "" },
+          { qty: 2, unit: "Karotte", unitPlural: "Karotten", name: "" },
+          { qty: 1, unit: "Paprika", unitPlural: "Paprika", name: "" },
+          { qty: 200, unit: "g", unitPlural: "g", name: "Hähnchenbrust (oder alternativ Bohnen)" },
+          { qty: 400, unit: "ml", unitPlural: "ml", name: "Wasser" },
+          { qty: 1, unit: "EL", unitPlural: "EL", name: "Rapsöl (etwas Rapsöl)" },
+          { noteOnly: "Chili, Pfeffer, Ingwer, Paprika, Zitronensaft nach Geschmack" }
+        ],
+        steps: [
+          "Zwiebel und Knoblauch klein schneiden und in wenig Öl anbraten.",
+          "Hähnchen dazugeben und kurz anbraten.",
+          "Tomaten, Karotten, Süßkartoffel und Paprika dazugeben.",
+          "Erdnussbutter mit etwas warmem Wasser verrühren und in den Topf geben.",
+          "Restliches Wasser dazugeben und etwa 25 Minuten köcheln lassen.",
+          "Mit Ingwer, Chili, Pfeffer und Zitronensaft abschmecken."
+        ],
+        sideDish: "Reis, am besten Vollkornreis oder eine Mischung aus Vollkorn- und normalem Reis.",
+        benefits: [
+          "Erdnüsse liefern ungesättigte Fettsäuren und Eiweiß.",
+          "Gemüse liefert Kalium und Ballaststoffe.",
+          "Süßkartoffeln sind eine gute Kaliumquelle.",
+          "Hähnchen liefert Eiweiß, ohne dass man fettes Fleisch braucht."
+        ],
+        tip: "Keine gesalzene Erdnussbutter verwenden und möglichst keinen Maggi-Brühwürfel hineingeben. Das ist bei diesem Rezept besonders wichtig."
+      },
+      {
+        id: "rezept-2-bohnentopf",
+        badge: "Sehr günstig • Gut zum Vorkochen",
+        title: "Rezept 2: Afrikanischer Bohnen-Tomaten-Topf",
+        imageUrl: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=900&q=80",
+        imageAlt: "Afrikanischer Bohnen-Tomaten-Topf mit Spinat",
+        imageCaption: "Bohnen-Tomaten-Topf mit Spinat",
+        intro: "Schnell gemacht, preiswert und ideal zum Vorkochen für mehrere Tage.",
+        sourceLabel: "Bean and spinach stew - Recipes | fooby.ch",
+        sourceUrl: "https://fooby.ch/",
+        ingredients: [
+          { qty: 1, unit: "Dose", unitPlural: "Dosen", name: "Kidneybohnen (abgespült)" },
+          { qty: 1, unit: "Dose", unitPlural: "Dosen", name: "weiße Bohnen oder Augenbohnen" },
+          { qty: 1, unit: "Zwiebel", unitPlural: "Zwiebeln", name: "" },
+          { qty: 2, unit: "Tomate", unitPlural: "Tomaten", name: "" },
+          { qty: 1, unit: "Karotte", unitPlural: "Karotten", name: "" },
+          { qty: 1, unit: "Handvoll", unitPlural: "Hände voll", name: "Spinat" },
+          { qty: 1, unit: "Knoblauchzehe", unitPlural: "Knoblauchzehen", name: "" },
+          { qty: 1, unit: "EL", unitPlural: "EL", name: "Rapsöl" },
+          { noteOnly: "Pfeffer, Curry, Chili, Paprika nach Geschmack" }
+        ],
+        steps: [
+          "Zwiebel und Knoblauch in Öl anbraten.",
+          "Tomaten und Karotten dazugeben.",
+          "Bohnen dazugeben.",
+          "Mit etwas Wasser aufgießen und 15 Minuten köcheln lassen.",
+          "Spinat unterheben und kurz zusammenfallen lassen."
+        ],
+        sideDish: "Reis, Hirse oder Vollkornbrot.",
+        benefits: [
+          "Bohnen liefern pflanzliches Eiweiß, Kalium und viele Ballaststoffe.",
+          "Sie sind günstig und machen lange satt."
+        ],
+        tip: "Bohnen vor der Verarbeitung gut abspülen, um überschüssiges Kochwasser bzw. Salz zu reduzieren."
+      },
+      {
+        id: "rezept-3-haehnchen-pfanne",
+        badge: "Frisch & aromatisch • Schmeckt auch am nächsten Tag",
+        title: "Rezept 3: Hähnchen-Gemüse-Pfanne mit Ingwer",
+        imageUrl: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=900&q=80",
+        imageAlt: "Hähnchen-Gemüse-Pfanne mit Ingwer und Gemüse",
+        imageCaption: "Hähnchen-Gemüse-Pfanne mit Ingwer",
+        intro: "Buntes Gemüse und frischer Ingwer sorgen für kräftiges Aroma ohne viel Salz.",
+        sourceLabel: "5-Ingredient Healthy Chicken Stir-Fry | vorstcanada.com",
+        sourceUrl: "https://vorstcanada.com/",
+        ingredients: [
+          { qty: 250, unit: "g", unitPlural: "g", name: "Hähnchenbrust" },
+          { qty: 1, unit: "Paprika", unitPlural: "Paprika", name: "" },
+          { qty: 1, unit: "Zucchini", unitPlural: "Zucchini", name: "" },
+          { qty: 2, unit: "Karotte", unitPlural: "Karotten", name: "" },
+          { qty: 1, unit: "Zwiebel", unitPlural: "Zwiebeln", name: "" },
+          { qty: 1, unit: "Stück", unitPlural: "Stücke", name: "Ingwer" },
+          { qty: 1, unit: "Knoblauchzehe", unitPlural: "Knoblauchzehen", name: "" },
+          { qty: 1, unit: "EL", unitPlural: "EL", name: "Rapsöl" },
+          { noteOnly: "Pfeffer, Curry, Paprika, Zitronensaft nach Geschmack" }
+        ],
+        steps: [
+          "Hähnchen in kleine Stücke schneiden.",
+          "In wenig Öl anbraten.",
+          "Gemüse klein schneiden und dazugeben.",
+          "Knoblauch und Ingwer dazugeben.",
+          "Mit etwas Wasser ablöschen und 10–15 Minuten garen."
+        ],
+        sideDish: "Reis oder Kartoffeln. Das Gericht schmeckt auch am nächsten Tag noch gut.",
+        benefits: [
+          "Mageres Eiweiß aus Hähnchenbrust kombiniert mit ballaststoffreichem Gemüse.",
+          "Frischer Ingwer und Zitronensaft geben Würze ohne Salzüberschuss."
+        ],
+        tip: "Ideal als schnelle Pfanne unter der Woche oder als Reste-Portion für den Folgetag."
+      },
+      {
+        id: "rezept-4-linseneintopf",
+        badge: "Sehr gut zum Einfrieren",
+        title: "Rezept 4: Deutscher Linsen-Kartoffel-Eintopf",
+        imageUrl: "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=900&q=80",
+        imageAlt: "Linsen-Kartoffel-Eintopf mit Gemüse und Kräutern",
+        imageCaption: "Linsen-Kartoffel-Eintopf",
+        intro: "Herzhafter Klassiker ohne Speck oder Wurst – lässt sich hervorragend einfrieren.",
+        sourceLabel: "Rezept für Linsensuppe | fuchsgruppe.shop",
+        sourceUrl: "https://fuchsgruppe.shop/",
+        ingredients: [
+          { qty: 200, unit: "g", unitPlural: "g", name: "braune oder grüne Linsen" },
+          { qty: 3, unit: "Kartoffel", unitPlural: "Kartoffeln", name: "" },
+          { qty: 2, unit: "Karotte", unitPlural: "Karotten", name: "" },
+          { qty: 1, unit: "Zwiebel", unitPlural: "Zwiebeln", name: "" },
+          { noteOnly: "etwas Lauch oder Sellerie" },
+          { qty: 1, unit: "EL", unitPlural: "EL", name: "Rapsöl" },
+          { qty: 700, unit: "ml", unitPlural: "ml", name: "Wasser" },
+          { noteOnly: "Pfeffer, Majoran, Lorbeerblatt, Essig nach Geschmack" }
+        ],
+        steps: [
+          "Zwiebel in etwas Öl anbraten.",
+          "Linsen, Kartoffeln und Gemüse dazugeben.",
+          "Wasser angießen.",
+          "Etwa 30–40 Minuten köcheln lassen (je nach Linsensorte).",
+          "Mit Pfeffer, Majoran und etwas Essig abschmecken."
+        ],
+        sideDish: "Schmeckt als vollwertiger Eintopf auch ohne Speck und Wurst sehr gut.",
+        benefits: [
+          "Linsen und Kartoffeln liefern Kalium, Ballaststoffe und pflanzliches Eiweiß.",
+          "Verzicht auf Speck und Wurst spart verstecktes Salz und gesättigte Fette."
+        ],
+        tip: "Einen größeren Topf kochen und einzelne Portionen einfrieren."
+      }
+    ];
+
+    // Drei schnelle Mahlzeiten für den Alltag (Basis: 3 Portionen)
+    const DAILY_MEALS = [
+      {
+        mealTime: "Frühstück",
+        title: "Haferflocken mit Banane",
+        imageUrl: "https://images.unsplash.com/photo-1517673400267-0251440c45dc?auto=format&fit=crop&w=800&q=80",
+        imageAlt: "Haferflocken mit Banane und Nüssen",
+        description: "Haferflocken, Milch oder Naturjoghurt, Banane und ein paar ungesalzene Nüsse. Schnell, günstig und ballaststoffreich.",
+        sourceLabel: "Alltag • Frühstück",
+        scaledItems: [
+          { qty: 150, unit: "g", unitPlural: "g", name: "Haferflocken" },
+          { qty: 3, unit: "Banane", unitPlural: "Bananen", name: "" },
+          { qty: 300, unit: "ml", unitPlural: "ml", name: "Milch oder Naturjoghurt" },
+          { noteOnly: "ein paar ungesalzene Nüsse" }
+        ]
+      },
+      {
+        mealTime: "Mittagessen",
+        title: "Ofenkartoffel mit Kräuterquark",
+        imageUrl: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=80",
+        imageAlt: "Ofenkartoffel mit Kräuterquark und Gemüse",
+        description: "Kartoffel oder Süßkartoffel im Ofen garen. Dazu Magerquark mit Knoblauch, Petersilie und etwas Zitrone. Mit Salat oder Thunfisch ergänzen.",
+        sourceLabel: "Alltag • Mittagessen",
+        scaledItems: [
+          { qty: 3, unit: "Kartoffel", unitPlural: "Kartoffeln", name: "oder Süßkartoffeln" },
+          { qty: 300, unit: "g", unitPlural: "g", name: "Magerquark" },
+          { noteOnly: "Knoblauch, Petersilie, Zitrone, optional Salat oder Thunfisch" }
+        ]
+      },
+      {
+        mealTime: "Abendessen",
+        title: "Fisch mit Tomatensalat",
+        imageUrl: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=800&q=80",
+        imageAlt: "Fisch mit Tomatensalat und Zitrone",
+        description: "Makrele oder anderer Fisch aus dem Ofen, dazu Tomaten, Zwiebeln, Zitronensaft und etwas Vollkornbrot oder Reis.",
+        sourceLabel: "Alltag • Abendessen",
+        scaledItems: [
+          { qty: 3, unit: "Portion", unitPlural: "Portionen", name: "Fisch (z. B. Makrele)" },
+          { qty: 4, unit: "Tomate", unitPlural: "Tomaten", name: "" },
+          { noteOnly: "Zwiebeln, Zitronensaft, etwas Vollkornbrot oder Reis" }
+        ]
+      }
+    ];
+
+    // Einkaufsliste aus Kapitel 6 (Basis: 3 Portionen)
+    const SHOPPING_ITEMS = [
+      { id: "erdnussbutter", food: "Erdnussbutter, ungesalzen", baseQty: 3, unit: "EL", unitPlural: "EL", usage: "Domoda, Saucen" },
+      { id: "haferflocken", food: "Haferflocken", baseQty: 150, unit: "g", unitPlural: "g", usage: "Frühstück" },
+      { id: "huelsenfruechte", food: "Kidneybohnen, Linsen", baseQty: 2, unit: "Dose / Packung", unitPlural: "Dosen / Packungen", usage: "Eintöpfe" },
+      { id: "tomaten-dose", food: "Tomaten aus der Dose", baseQty: 1, unit: "kleine Dose", unitPlural: "kleine Dosen", usage: "Saucen" },
+      { id: "suesskartoffeln", food: "Süßkartoffeln", baseQty: 1, unit: "Stück", unitPlural: "Stück", usage: "Beilage, Domoda" },
+      { id: "gemuese", food: "Karotten, Paprika, Spinat", baseQty: null, unit: "", unitPlural: "", usage: "Gemüse" },
+      { id: "wuerze", food: "Zwiebeln, Knoblauch, Ingwer", baseQty: null, unit: "", unitPlural: "", usage: "Würzen" },
+      { id: "rapsoel", food: "Rapsöl", baseQty: 1, unit: "EL", unitPlural: "EL", usage: "Braten" },
+      { id: "milchprodukte", food: "Naturjoghurt oder Quark", baseQty: 300, unit: "g", unitPlural: "g", usage: "Frühstück, Dips" },
+      { id: "eiweiss", food: "Hähnchen, Fisch", baseQty: 200, unit: "g", unitPlural: "g", usage: "Eiweiß" },
+      { id: "beilage", food: "Reis, Kartoffeln", baseQty: null, unit: "", unitPlural: "", usage: "Sättigungsbeilage" },
+      { id: "obst", food: "Bananen, Äpfel", baseQty: 3, unit: "Stück", unitPlural: "Stück", usage: "Zwischenmahlzeit" }
+    ];
+
+    function loadInitialPortions() {
+      try {
+        const raw = localStorage.getItem(STORAGE_PORTIONS_KEY);
+        const parsed = raw ? parseInt(raw, 10) : BASE_PORTIONS;
+        if (!Number.isNaN(parsed) && parsed >= MIN_PORTIONS && parsed <= MAX_PORTIONS) {
+          return parsed;
+        }
+      } catch (err) {
+        // Fallback auf Basisportionen
+      }
+      return BASE_PORTIONS;
+    }
+
+    let currentPortions = loadInitialPortions();
+    let checkedIds = loadCheckedIds();
+
+    /**
+     * Erzeugt ein SVG-Icon als Data-URI für das PWA-Manifest.
+     */
+    function createSvgIconDataUri(size) {
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 120 120"><rect width="120" height="120" rx="28" fill="#92400e"/><circle cx="60" cy="62" r="34" fill="#fef3c7"/><path d="M34 62h52c0 16-11.6 28-26 28S34 78 34 62z" fill="#b45309"/><path d="M46 34c0-6 8-6 8-12M66 34c0-6 8-6 8-12" stroke="#ffffff" stroke-width="4" stroke-linecap="round" fill="none"/></svg>`;
+        return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+      }
+
+      /**
+       * Konfiguriert das Web App Manifest dynamisch per Blob-URL (mit Data-URI-Fallback).
+       */
+      function setupPwaManifest() {
+        const manifestObj = {
+          name: "Gamou-Rezepte & Blutdruck PWA",
+          short_name: "Gamou Rezepte",
+          description: "Blutdruckfreundliche Rezepte und Portionsrechner (1–100 Portionen) nach Gamou-Rezept-Blutdruck-01.pdf",
+          start_url: "./",
+          scope: "./",
+          display: "standalone",
+          orientation: "portrait-primary",
+          background_color: "#fafaf9",
+          theme_color: "#b45309",
+          icons: [
+            {
+              src: createSvgIconDataUri(192),
+              sizes: "192x192",
+              type: "image/svg+xml",
+              purpose: "any maskable"
+            },
+            {
+              src: createSvgIconDataUri(512),
+              sizes: "512x512",
+              type: "image/svg+xml",
+              purpose: "any maskable"
+            }
+          ]
+        };
+
+        try {
+          const blob = new Blob([JSON.stringify(manifestObj)], { type: "application/manifest+json" });
+          const blobUrl = URL.createObjectURL(blob);
+          const linkEl = document.getElementById("dynamic-manifest-link");
+          if (linkEl) {
+            linkEl.setAttribute("href", blobUrl);
+          }
+        } catch (err) {
+          // Data-URI im <link> bleibt als Fallback aktiv
+        }
+      }
+
+      /**
+       * Registriert einen Inline-Service-Worker per Blob-URL, sofern unterstützt und nicht blockiert.
+       */
+      function setupInlineServiceWorker() {
+        if (!("serviceWorker" in navigator)) return;
+        const isSecureContext = window.isSecureContext || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+        if (!isSecureContext) return;
+
+        const swCode = `
+          const CACHE_NAME = "gamou-rezepte-pwa-v1";
+          self.addEventListener("install", (event) => {
+            event.waitUntil(
+              caches.open(CACHE_NAME).then((cache) => {
+                return cache.addAll(["./"]).catch(() => Promise.resolve());
+              }).then(() => self.skipWaiting())
+            );
+          });
+          self.addEventListener("activate", (event) => {
+            event.waitUntil(
+              caches.keys().then((keys) =>
+                Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
+              ).then(() => self.clients.claim())
+            );
+          });
+          self.addEventListener("fetch", (event) => {
+            if (event.request.method !== "GET") return;
+            event.respondWith(
+              caches.match(event.request).then((cached) => {
+                return cached || fetch(event.request).then((response) => {
+                  if (response && response.status === 200 && response.type === "basic") {
+                    const copy = response.clone();
+                    caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy)).catch(() => {});
+                  }
+                  return response;
+                }).catch(() => cached);
+              })
+            );
+          });
+        `;
+
+        try {
+          const swBlob = new Blob([swCode], { type: "application/javascript" });
+          const swUrl = URL.createObjectURL(swBlob);
+          navigator.serviceWorker.register(swUrl, { scope: "./" }).catch(() => {
+            // Bei lokalen file://-Aufrufen blockieren Browser Blob-Service-Worker; App funktioniert trotzdem
+          });
+        } catch (err) {
+          // Fallback ohne Service Worker
+        }
+      }
+
+      /**
+       * Steuert den PWA-Installationsprompt und den Hilfebereich für Android/iOS.
+       */
+      function setupInstallUi() {
+        let deferredPrompt = null;
+        const installBtn = document.getElementById("pwa-install-btn");
+        const guideEl = document.getElementById("pwa-install-guide");
+        const closeBtn = document.getElementById("close-install-guide");
+        const statusMsg = document.getElementById("pwa-status-msg");
+
+        const updateStatusText = (customText) => {
+          if (!statusMsg) return;
+          if (customText) {
+            statusMsg.textContent = customText;
+            return;
+          }
+          const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+          if (isStandalone) {
+            statusMsg.textContent = "Diese Seite läuft bereits im App-Modus (Standalone).";
+          } else if (deferredPrompt) {
+            statusMsg.textContent = "Dein Browser unterstützt die direkte App-Installation. Klicke erneut auf „Als App installieren“ oder nutze die Schritte unten.";
+          } else {
+            statusMsg.textContent = "Tipp: Falls die Datei lokal (z. B. über Datei-Manager oder WhatsApp/Cloud) geöffnet wurde, öffne sie im mobilen Browser (Chrome/Safari) oder lade sie auf einen HTTPS-Server hoch, um sie dauerhaft als App zu installieren.";
+          }
+        };
+
+        window.addEventListener("beforeinstallprompt", (e) => {
+          e.preventDefault();
+          deferredPrompt = e;
+          updateStatusText();
+        });
+
+        window.addEventListener("appinstalled", () => {
+          deferredPrompt = null;
+          updateStatusText("Die App wurde erfolgreich auf deinem Gerät installiert.");
+        });
+
+        installBtn?.addEventListener("click", async () => {
+          if (deferredPrompt) {
+            try {
+              deferredPrompt.prompt();
+              await deferredPrompt.userChoice;
+              deferredPrompt = null;
+            } catch (err) {
+              // Falls Prompt abgebrochen wird, Anleitung anzeigen
+            }
+          }
+          updateStatusText();
+          guideEl?.classList.remove("hidden");
+          guideEl?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        });
+
+        closeBtn?.addEventListener("click", () => {
+          guideEl?.classList.add("hidden");
+        });
+
+        updateStatusText();
+      }
+
+      function savePortions(val) {
+        try {
+          localStorage.setItem(STORAGE_PORTIONS_KEY, String(val));
+        } catch (err) {
+          // Ignorieren bei eingeschränktem Speicher
+        }
+      }
+
+      function loadCheckedIds() {
+        try {
+          const raw = localStorage.getItem(STORAGE_CHECKS_KEY);
+          return raw ? JSON.parse(raw) : [];
+        } catch (err) {
+          return [];
+        }
+      }
+
+      function saveCheckedIds() {
+        try {
+          localStorage.setItem(STORAGE_CHECKS_KEY, JSON.stringify(checkedIds));
+        } catch (err) {
+          // Ignorieren
+        }
+      }
+
+      /**
+       * Formatiert eine Zahl sauber für Küchenangaben (z. B. 0.5 -> ½, 1.25 -> 1,3, große Mengen gerundet).
+       */
+      function formatNumber(num) {
+        if (!Number.isFinite(num) || num <= 0) return "0";
+        if (num >= 100) {
+          return String(Math.round(num));
+        }
+        if (num >= 10) {
+          const rounded = Math.round(num * 10) / 10;
+          return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1).replace(".", ",");
+        }
+        const roundedQuarter = Math.round(num * 4) / 4;
+        if (roundedQuarter === 0.25) return "¼";
+        if (roundedQuarter === 0.5) return "½";
+        if (roundedQuarter === 0.75) return "¾";
+        const whole = Math.floor(roundedQuarter);
+        const frac = roundedQuarter - whole;
+        if (frac === 0) return String(whole);
+        if (frac === 0.5) return `${whole}½`;
+        return roundedQuarter.toFixed(1).replace(".", ",");
+      }
+
+      /**
+       * Formatiert eine skalierte Zutat in eine gut lesbare Zeile.
+       */
+      function formatIngredient(item, portions) {
+        if (item.noteOnly) {
+          return item.noteOnly;
+        }
+        const scaled = (item.qty * portions) / BASE_PORTIONS;
+        const formattedNum = formatNumber(scaled);
+        const isSingular = Math.abs(scaled - 1) < 0.01;
+        const unitText = item.unit
+          ? (!isSingular && item.unitPlural ? item.unitPlural : item.unit)
+          : "";
+        const namePart = item.name ? ` ${item.name}` : "";
+        return `<strong class="text-stone-900 font-bold">${formattedNum}${unitText ? " " + unitText : ""}</strong>${namePart}`;
+      }
+
+      /**
+       * Rendert alle 4 Hauptrezepte mit aktuell berechneten Mengen.
+       */
+      function renderRecipes(portions) {
+        const container = document.getElementById("recipes-container");
+        if (!container) return;
+
+        container.innerHTML = RECIPES.map((recipe) => {
+          const ingredientItems = recipe.ingredients
+            .map((ing) => `<li class="flex items-start gap-2 text-sm text-stone-700"><span class="text-amber-700 font-bold mt-0.5">•</span><span>${formatIngredient(ing, portions)}</span></li>`)
+            .join("");
+
+          const stepItems = recipe.steps
+            .map((step, idx) => `<li class="text-sm text-stone-700 leading-relaxed"><span class="font-bold text-amber-800 mr-1.5">${idx + 1}.</span>${step}</li>`)
+            .join("");
+
+          const benefitItems = recipe.benefits
+            .map((b) => `<li class="text-xs sm:text-sm text-leaf-900">• ${b}</li>`)
+            .join("");
+
+          return `
+            <article id="${recipe.id}" class="rounded-3xl border border-stone-200 bg-stone-50/40 overflow-hidden shadow-sm">
+              <div class="grid grid-cols-1 lg:grid-cols-12">
+                <!-- Linke Spalte: Bild & Kurzinfo -->
+                <div class="lg:col-span-4 bg-stone-100 border-b lg:border-b-0 lg:border-r border-stone-200 p-5 flex flex-col justify-between space-y-4">
+                  <div class="space-y-3">
+                    <span class="inline-block text-xs font-bold px-3 py-1 rounded-full bg-amber-100 text-amber-900">
+                      ${recipe.badge}
+                    </span>
+                    <h3 class="text-xl font-extrabold text-stone-900 leading-snug">
+                      ${recipe.title}
+                    </h3>
+                    <figure class="rounded-2xl overflow-hidden border border-stone-200 bg-stone-900">
+                      <img
+                        src="${recipe.imageUrl}"
+                        data-fallback-label="${recipe.title}"
+                        alt="${recipe.imageAlt}"
+                        class="w-full h-48 object-cover"
+                        onerror="handleImageError(this)"
+                      />
+                      <figcaption class="px-3 py-2 text-xs text-stone-300 bg-stone-900">
+                        ${recipe.imageCaption}
+                      </figcaption>
+                    </figure>
+                    <p class="text-sm text-stone-700 leading-relaxed">${recipe.intro}</p>
+                  </div>
+
+                  <div class="text-xs text-stone-600 bg-white p-3 rounded-xl border border-stone-200">
+                    <span class="font-semibold text-stone-800">PDF-Quelle:</span>
+                    <a href="${recipe.sourceUrl}" target="_blank" rel="noopener noreferrer" class="underline hover:text-amber-800 ml-1">
+                      ${recipe.sourceLabel}
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Mittlere Spalte: Zutaten (skaliert) -->
+                <div class="lg:col-span-4 p-5 sm:p-6 border-b lg:border-b-0 lg:border-r border-stone-200 bg-white space-y-3">
+                  <div class="flex items-center justify-between gap-2">
+                    <h4 class="font-bold text-base text-stone-900">Zutaten</h4>
+                    <span class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-amber-50 text-amber-900 border border-amber-200">
+                      für ${portions} ${portions === 1 ? "Portion" : "Portionen"}
+                    </span>
+                  </div>
+                  <ul class="space-y-2">
+                    ${ingredientItems}
+                  </ul>
+                </div>
+
+                <!-- Rechte Spalte: Zubereitung, Beilage, Wirkung & Tipp -->
+                <div class="lg:col-span-4 p-5 sm:p-6 bg-white space-y-4">
+                  <div>
+                    <h4 class="font-bold text-base text-stone-900 mb-2">Zubereitung</h4>
+                    <ol class="space-y-2">
+                      ${stepItems}
+                    </ol>
+                  </div>
+
+                  <div class="p-3 rounded-xl bg-stone-50 border border-stone-200 text-xs sm:text-sm text-stone-800">
+                    <strong>Beilage:</strong> ${recipe.sideDish}
+                  </div>
+
+                  <div class="p-3 rounded-xl bg-leaf-50 border border-leaf-200 space-y-1">
+                    <div class="text-xs font-bold uppercase tracking-wide text-leaf-800">Warum ist das gut?</div>
+                    <ul class="space-y-1">
+                      ${benefitItems}
+                    </ul>
+                  </div>
+
+                  <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs sm:text-sm text-amber-950">
+                    <strong>Tipp:</strong> ${recipe.tip}
+                  </div>
+                </div>
+              </div>
+            </article>
+          `;
+        }).join("");
+      }
+
+      /**
+       * Rendert die 3 schnellen Alltagsgerichte mit skalierten Mengenangaben.
+       */
+      function renderDailyMeals(portions) {
+        const container = document.getElementById("daily-meals-container");
+        if (!container) return;
+
+        container.innerHTML = DAILY_MEALS.map((meal) => {
+          const itemsHtml = meal.scaledItems
+            .map((item) => `<li class="text-xs sm:text-sm text-stone-700">• ${formatIngredient(item, portions)}</li>`)
+            .join("");
+
+          return `
+            <div class="rounded-2xl border border-stone-200 bg-stone-50/50 overflow-hidden flex flex-col justify-between">
+              <div>
+                <img
+                  src="${meal.imageUrl}"
+                  data-fallback-label="${meal.title}"
+                  alt="${meal.imageAlt}"
+                  class="w-full h-44 object-cover border-b border-stone-200"
+                  onerror="handleImageError(this)"
+                />
+                <div class="p-5 space-y-2.5">
+                  <span class="inline-block text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-100 text-amber-900">
+                    ${meal.mealTime}
+                  </span>
+                  <h3 class="font-bold text-lg text-stone-900">${meal.title}</h3>
+                  <p class="text-sm text-stone-700 leading-relaxed">${meal.description}</p>
+                  <ul class="pt-2 space-y-1 border-t border-stone-200/80">
+                    ${itemsHtml}
+                  </ul>
+                </div>
+              </div>
+              <div class="px-5 py-3 bg-white border-t border-stone-200 text-xs text-stone-500">
+                ${meal.sourceLabel}
+              </div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      /**
+       * Rendert die Einkaufsliste mit Häkchen-Speicherung und skalierten Mengen.
+       */
+      function renderShoppingList(portions) {
+        const tbody = document.getElementById("shopping-list-body");
+        if (!tbody) return;
+
+        tbody.innerHTML = SHOPPING_ITEMS.map((item) => {
+          const isChecked = checkedIds.includes(item.id);
+          let qtyText = "nach Bedarf / Basis";
+          if (typeof item.baseQty === "number") {
+            const scaled = (item.baseQty * portions) / BASE_PORTIONS;
+            const formatted = formatNumber(scaled);
+            const isSingular = Math.abs(scaled - 1) < 0.01;
+            const unitLabel = !isSingular && item.unitPlural ? item.unitPlural : item.unit;
+            qtyText = `${formatted} ${unitLabel}`.trim();
+          }
+
+          return `
+            <tr class="${isChecked ? "bg-leaf-50/70 line-through text-stone-400" : "hover:bg-amber-50/40 text-stone-800"} transition">
+              <td class="p-3.5 text-center">
+                <input
+                  type="checkbox"
+                  data-check-id="${item.id}"
+                  ${isChecked ? "checked" : ""}
+                  aria-label="${item.food} als erledigt markieren"
+                  class="w-5 h-5 accent-amber-700 rounded cursor-pointer"
+                />
+              </td>
+              <td class="p-3.5 font-semibold">${item.food}</td>
+              <td class="p-3.5 font-medium text-amber-900">${qtyText}</td>
+              <td class="p-3.5 text-stone-600">${item.usage}</td>
+            </tr>
+          `;
+        }).join("");
+
+        tbody.querySelectorAll("input[type='checkbox']").forEach((cb) => {
+          cb.addEventListener("change", (e) => {
+            const id = e.target.getAttribute("data-check-id");
+            if (!id) return;
+            if (e.target.checked) {
+              if (!checkedIds.includes(id)) checkedIds.push(id);
+            } else {
+              checkedIds = checkedIds.filter((x) => x !== id);
+            }
+            saveCheckedIds();
+            renderShoppingList(currentPortions);
+          });
+        });
+      }
+
+      /**
+       * Aktualisiert alle Anzeigen, Steuerelemente und berechneten Listen.
+       */
+      function updateAll(newPortions) {
+        const clamped = Math.max(MIN_PORTIONS, Math.min(MAX_PORTIONS, Math.round(newPortions) || BASE_PORTIONS));
+        currentPortions = clamped;
+        savePortions(currentPortions);
+
+        const numInput = document.getElementById("portion-number-input");
+        const activeDisplay = document.getElementById("active-portions-display");
+        const factorBadge = document.getElementById("portion-factor-badge");
+
+        if (numInput) numInput.value = String(currentPortions);
+        if (activeDisplay) activeDisplay.textContent = String(currentPortions);
+
+        const factor = (currentPortions / BASE_PORTIONS).toFixed(2).replace(".", ",");
+        if (factorBadge) {
+          factorBadge.textContent = `Faktor: ${factor}× (Original: ${BASE_PORTIONS} Portionen)`;
+        }
+
+        document.querySelectorAll(".current-portion-text").forEach((el) => {
+          el.textContent = String(currentPortions);
+        });
+
+        document.querySelectorAll(".preset-btn").forEach((btn) => {
+          const presetVal = parseInt(btn.getAttribute("data-preset"), 10);
+          if (presetVal === currentPortions) {
+            btn.classList.remove("bg-amber-50", "text-amber-950");
+            btn.classList.add("bg-amber-700", "text-white", "border-amber-700");
+          } else {
+            btn.classList.add("bg-amber-50", "text-amber-950");
+            btn.classList.remove("bg-amber-700", "text-white", "border-amber-700");
+          }
+        });
+
+        renderRecipes(currentPortions);
+        renderDailyMeals(currentPortions);
+        renderShoppingList(currentPortions);
+      }
+
+      // Event-Listener für Portionsrechner (Knöpfe + direkte Zahleneingabe)
+      document.getElementById("portion-number-input")?.addEventListener("input", (e) => {
+        const val = parseInt(e.target.value, 10);
+        if (!Number.isNaN(val)) {
+          updateAll(val);
+        }
+      });
+
+      document.getElementById("portion-number-input")?.addEventListener("blur", (e) => {
+        const val = parseInt(e.target.value, 10);
+        updateAll(Number.isNaN(val) ? BASE_PORTIONS : val);
+      });
+
+      document.getElementById("btn-decrease")?.addEventListener("click", () => {
+        updateAll(currentPortions - 1);
+      });
+
+      document.getElementById("btn-increase")?.addEventListener("click", () => {
+        updateAll(currentPortions + 1);
+      });
+
+      document.querySelectorAll(".preset-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const val = parseInt(btn.getAttribute("data-preset"), 10);
+          updateAll(val);
+        });
+      });
+
+      // Einkaufsliste kopieren & Häkchen löschen
+      document.getElementById("copy-shopping-btn")?.addEventListener("click", () => {
+        const lines = [`Einkaufsliste (${currentPortions} Portionen) – Gamou-Rezepte & Blutdruck:`];
+        SHOPPING_ITEMS.forEach((item) => {
+          const mark = checkedIds.includes(item.id) ? "[x]" : "[ ]";
+          let qtyPart = "";
+          if (typeof item.baseQty === "number") {
+            const scaled = (item.baseQty * currentPortions) / BASE_PORTIONS;
+            const formatted = formatNumber(scaled);
+            const isSingular = Math.abs(scaled - 1) < 0.01;
+            const unitLabel = !isSingular && item.unitPlural ? item.unitPlural : item.unit;
+            qtyPart = ` (${formatted} ${unitLabel})`.trim();
+          }
+          lines.push(`${mark} ${item.food}${qtyPart} – ${item.usage}`);
+        });
+
+        const textToCopy = lines.join("\n");
+        const feedbackEl = document.getElementById("copy-feedback");
+
+        const showFeedback = (msg) => {
+          if (!feedbackEl) return;
+          feedbackEl.textContent = msg;
+          feedbackEl.classList.remove("hidden");
+          setTimeout(() => feedbackEl.classList.add("hidden"), 3500);
+        };
+
+        try {
+          const textarea = document.createElement("textarea");
+          textarea.value = textToCopy;
+          textarea.setAttribute("readonly", "");
+          textarea.style.position = "fixed";
+          textarea.style.opacity = "0";
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand("copy");
+          document.body.removeChild(textarea);
+          showFeedback("Einkaufsliste wurde in die Zwischenablage kopiert.");
+        } catch (err) {
+          showFeedback("Kopieren im Browser nicht möglich – die Liste kann direkt markiert werden.");
+        }
+      });
+
+      document.getElementById("clear-checks-btn")?.addEventListener("click", () => {
+        checkedIds = [];
+        saveCheckedIds();
+        renderShoppingList(currentPortions);
+      });
+
+      // PWA initialisieren & initialen Render starten
+      setupPwaManifest();
+      setupInlineServiceWorker();
+      setupInstallUi();
+      updateAll(currentPortions);
+    })();
+
+    /**
+     * Fallback für Bilder, falls externe Bild-URLs offline oder blockiert sind.
+     */
+    function handleImageError(img) {
+      if (!img || img.dataset.fallbackApplied === "true") return;
+      img.dataset.fallbackApplied = "true";
+      const label = encodeURIComponent(img.dataset.fallbackLabel || "Gamou Rezept");
+      img.src = `https://placehold.co/800x500/78350f/fef3c7?text=${label}`;
+    }
+  </script>
+</body>
+</html>

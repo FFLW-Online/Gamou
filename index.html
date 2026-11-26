@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#b4532a">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<title>Gut kochen</title>
+<style>
+:root{--bg:#fbf5ea;--ink:#2b1d14;--mut:#6b5646;--card:#fff;--acc:#b4532a;--leaf:#3d6b3a;--warn:#fde8e4;--warnb:#c0392b;--line:#e8dccb}
+@media(prefers-color-scheme:dark){:root{--bg:#1d1611;--ink:#f6ecde;--mut:#c4b29f;--card:#2a211a;--acc:#e08a5c;--leaf:#8fc58a;--warn:#4a2420;--warnb:#ff8a7a;--line:#40342a}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(130px + env(safe-area-inset-top,0px))}
+body{margin:0;background:var(--bg);color:var(--ink);font:20px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+header{position:sticky;top:0;z-index:5;background:var(--acc);color:#fff;padding:calc(10px + env(safe-area-inset-top,0px)) 14px 10px}
+header h1{margin:0 0 6px;font-size:1.25rem}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.step{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.18);border-radius:14px;padding:4px 8px}
+.step button{width:48px;height:48px;border:0;border-radius:12px;font-size:1.6rem;font-weight:700;background:#fff;color:var(--acc)}
+.step b{min-width:2.4ch;text-align:center;font-size:1.5rem}
+nav{display:flex;gap:8px;margin-left:auto}
+nav a{color:#fff;text-decoration:none;font-weight:700;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.18);font-size:.95rem}
+main{max-width:720px;margin:0 auto;padding:14px}
+section{margin:0 0 28px}
+h2{font-size:1.5rem;margin:6px 0 12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;margin:0 0 20px}
+.card .body{padding:14px 16px 18px}
+.card h3{margin:0 0 8px;font-size:1.3rem}
+.pic{width:100%;height:210px;object-fit:cover;display:block;background:var(--line)}
+.ph{height:210px;display:flex;align-items:center;justify-content:center;font-size:4rem;background:var(--line)}
+.sub{color:var(--mut);font-size:.9rem;margin:0 0 10px}
+.salt{background:var(--warn);border:2px solid var(--warnb);border-radius:14px;padding:10px 12px;margin:10px 0;font-weight:600}
+h4{margin:16px 0 6px;font-size:1.05rem;color:var(--acc)}
+ul,ol{padding-left:1.3em;margin:0}
+li{margin:5px 0}
+li b{color:var(--acc);white-space:nowrap}
+ol li::marker{font-weight:700;color:var(--acc)}
+.tip{background:rgba(61,107,58,.12);border-radius:14px;padding:8px 12px;margin-top:12px}
+.tip li{margin:4px 0}
+.legend{font-size:.9rem;color:var(--mut);margin:0 0 14px}
+.shop label{display:flex;align-items:center;gap:14px;padding:12px 4px;border-bottom:1px solid var(--line);min-height:56px}
+.shop input{width:28px;height:28px;accent-color:var(--leaf);flex:none}
+.shop small{display:block;color:var(--mut)}
+.shop input:checked+span{text-decoration:line-through;opacity:.55}
+.btn{display:inline-block;background:var(--acc);color:#fff;border:0;border-radius:14px;padding:14px 18px;font:inherit;font-weight:700;text-decoration:none;margin:10px 8px 0 0}
+.btn.alt{background:transparent;color:var(--acc);border:2px solid var(--acc)}
+.rule{display:flex;gap:12px;align-items:flex-start}.rule span{font-size:1.8rem}
+.emerg{background:var(--warn);border:3px solid var(--warnb);border-radius:20px;padding:14px 16px}
+.emerg .big{font-size:1.4rem;font-weight:800}
+footer{text-align:center;padding:10px 14px 34px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Gut kochen</h1>
+  <div class="row">
+    <div class="step" role="group" aria-label="Wie viele Portionen?">
+      <button type="button" id="minus" aria-label="Weniger">−</button>
+      <b id="pn">1</b>
+      <button type="button" id="plus" aria-label="Mehr">+</button>
+    </div>
+    <span id="pl">Portion</span>
+    <nav><a href="#rezepte">Essen</a><a href="#einkauf">Einkauf</a><a href="#regeln">Regeln</a></nav>
+  </div>
+</header>
+<main>
+<section id="rezepte">
+  <h2>Was koche ich?</h2>
+  <p class="legend">≈ heißt: ungefähr reicht. ❗ heißt: das ist wichtig.</p>
+  <div id="rec"></div>
+</section>
+
+<section id="einkauf" class="shop">
+  <h2>Einkaufen</h2>
+  <p class="legend">Tippe auf einen Punkt, wenn du ihn hast.</p>
+  <div class="card"><div class="body" id="shop"></div></div>
+  <button class="btn alt" type="button" id="clr">Haken löschen</button>
+</section>
+
+<section id="regeln">
+  <h2>3 einfache Regeln</h2>
+  <div class="card"><div class="body">
+    <div class="rule"><span>🧂</span><div><b>1. Wenig Salz ❗</b><ul>
+      <li>Kein Maggi-Würfel.</li><li>Keine Fertigsuppe, keine Instant-Nudeln.</li>
+      <li>Keine Wurst, kein geräuchertes Fleisch.</li><li>Keine Chips, keine gesalzenen Erdnüsse.</li></ul></div></div>
+    <div class="rule" style="margin-top:14px"><span>🥬</span><div><b>2. Viel Gemüse, Obst und Bohnen</b><ul><li>Jeden Tag Gemüse essen.</li></ul></div></div>
+    <div class="rule" style="margin-top:14px"><span>🧄</span><div><b>3. Würzen ohne Salz</b><ul><li>Knoblauch, Ingwer, Chili, Zitrone, Pfeffer, Petersilie.</li></ul></div></div>
+  </div></div>
+
+  <div class="emerg">
+    <div class="big">❗ Hilfe holen</div>
+    <p style="margin:6px 0">Bei <b>Brustschmerzen</b>, <b>Atemnot</b>, <b>Lähmung</b>, Sprachproblemen oder sehr starken Beschwerden:</p>
+    <p class="big" style="margin:6px 0">Sofort 112 anrufen.</p>
+    <p style="margin:6px 0">Ist der Blutdruck oft zu hoch? Geh zum Arzt. Nimm Tabletten <b>nie</b> selbst weg.</p>
+  </div>
+</section>
+</main>
+<footer>
+  <a class="btn alt" href="mehr.html">Mehr wissen</a>
+</footer>
+
+<script>
+var R=[
+{t:"Domoda: Erdnuss-Sauce mit Gemüse",e:"🥜",l:"bilder/domoda.jpg",r:"https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=80",
+ salt:"Kein Salz. Kaufe Erdnussbutter ohne Salz. Kein Maggi-Würfel.",
+ z:[[1,"EL","Erdnussbutter (ohne Salz)"],[1,"n","kleine Zwiebel","kleine Zwiebeln"],[1,"n","Knoblauchzehe","Knoblauchzehen"],[1,"n","kleine Tomate","kleine Tomaten"],[100,"g","Süßkartoffel"],[1,"n","Karotte","Karotten"],[0.25,"n","Paprika","Paprika"],[70,"g","Hähnchenbrust (oder Bohnen)"],[150,"ml","Wasser (zu dick? Etwas Wasser dazu)"],[1,"TL","Rapsöl"]],
+ g:"Gewürze: Ingwer, Chili, Pfeffer, Zitronensaft. Erst wenig, dann probieren.",
+ s:["Zwiebel und Knoblauch klein schneiden.","Öl in den Topf. Zwiebel und Knoblauch kurz braten.","Hähnchen dazu. Kurz braten.","Tomaten, Karotten, Süßkartoffel und Paprika dazu.","Erdnussbutter mit etwas warmem Wasser verrühren. In den Topf geben.","Das restliche Wasser dazu.","25 Minuten kochen lassen.","Mit Ingwer, Chili, Pfeffer und Zitrone würzen."],
+ d:"Dazu passt Reis.",
+ p:["Chili: erst eine kleine Prise. Mehr geht immer, weniger nicht.","Süßkartoffel und Karotten gleich groß schneiden.","Nach 25 Minuten ein Stück Süßkartoffel probieren. Ist es weich, ist es fertig."]},
+{t:"Bohnen-Tomaten-Topf",e:"🫘",l:"bilder/bohnen.jpg",r:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=900&q=80",
+ salt:"Kein Salz. Bohnen aus der Dose zuerst mit Wasser abspülen.",
+ z:[[0.5,"Tasse","Kidneybohnen"],[0.5,"Tasse","weiße Bohnen oder Augenbohnen"],[0.5,"n","kleine Zwiebel","kleine Zwiebeln"],[1,"n","Tomate","Tomaten"],[0.5,"n","Karotte","Karotten"],[1,"n","Handvoll Spinat","Handvoll Spinat"],[0.5,"n","Knoblauchzehe","Knoblauchzehen"],[1,"TL","Rapsöl"],[200,"ml","Wasser"]],
+ g:"Gewürze: erst wenig, dann probieren.",
+ s:["Zwiebel und Knoblauch klein schneiden.","In Öl kurz braten.","Tomaten und Karotten dazu.","Bohnen dazu.","Wasser dazu. 15 Minuten kochen lassen.","Spinat dazu. 1 bis 2 Minuten warten. Fertig."],
+ p:["Spinat ganz zum Schluss dazugeben. Er fällt schnell zusammen.","Zu trocken? Etwas Wasser dazu.","Schmeckt am nächsten Tag noch besser."]},
+{t:"Hähnchen-Gemüse-Pfanne mit Ingwer",e:"🍗",l:"bilder/haehnchen.jpg",r:"https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=900&q=80",
+ salt:"Kein Salz. Würze mit Ingwer, Knoblauch und Zitrone.",
+ z:[[80,"g","Hähnchenbrust"],[0.33,"n","Paprika","Paprika"],[0.33,"n","Zucchini","Zucchini"],[0.5,"n","Karotte","Karotten"],[0.5,"n","kleine Zwiebel","kleine Zwiebeln"],[1,"n","Stück Ingwer (so groß wie ein Daumennagel)","Stück Ingwer (so groß wie ein Daumennagel)"],[0.5,"n","Knoblauchzehe","Knoblauchzehen"],[1,"TL","Rapsöl"],[3,"EL","Wasser"]],
+ g:"Gewürze: erst wenig, dann probieren.",
+ s:["Hähnchen in kleine Stücke schneiden.","Gemüse klein schneiden.","Öl in die Pfanne. Hähnchen braten.","Gemüse, Knoblauch und Ingwer dazu.","Wasser dazu. 10 bis 15 Minuten garen."],
+ p:["Alles Gemüse etwa gleich groß schneiden.","Hähnchen muss innen durch sein. Es darf nicht mehr rosa sein.","Pfanne nicht zu voll machen, sonst wird es matschig."]},
+{t:"Linsen-Kartoffel-Eintopf",e:"🍲",l:"bilder/linsen.jpg",r:"https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=900&q=80",
+ salt:"Kein Salz. Kein Speck, keine Wurst, kein Brühwürfel.",
+ z:[[4,"EL","Linsen"],[1,"n","Kartoffel","Kartoffeln"],[0.5,"n","Karotte","Karotten"],[0.5,"n","kleine Zwiebel","kleine Zwiebeln"],[1,"TL","Rapsöl"],[200,"ml","Wasser"]],
+ g:"Gewürze: Pfeffer, Majoran, 1 Lorbeerblatt. Am Ende etwas Essig.",
+ s:["Zwiebel klein schneiden. In Öl braten.","Linsen kurz abspülen.","Linsen, Kartoffel und Karotte dazu. Alles klein schneiden.","Wasser dazu.","30 bis 40 Minuten kochen lassen.","Mit Pfeffer, Majoran und Essig würzen."],
+ p:["Wann die Linsen weich sind, merkst du nur beim Probieren. Es hängt von der Sorte ab.","Das Lorbeerblatt vor dem Essen herausnehmen."]}
+];
+var S=[["Erdnussbutter ohne Salz","Domoda"],["Haferflocken","Frühstück"],["Bohnen, Linsen","Topf, Eintopf"],["Tomaten aus der Dose","Saucen"],["Süßkartoffel","Domoda"],["Karotten, Paprika, Spinat","Gemüse"],["Zwiebeln, Knoblauch, Ingwer","Würze"],["Rapsöl","Braten"],["Naturjoghurt oder Quark","Frühstück"],["Hähnchen oder Fisch","Pfanne"],["Reis, Kartoffeln","Beilage"],["Bananen, Äpfel","Obst"]];
+var n=1,H={};
+function ld(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+n=ld("portionen",1);H=ld("haken",{});
+function fr(v){var w=Math.floor(v+1e-9),f=v-w,s="";
+ if(f>.7)s="¾";else if(f>.4)s="½";else if(f>.1)s="¼";
+ return (w?w:"")+s||"¼"}
+function amt(q,u){q*=n;
+ if(u=="g"){if(q>=1000)return (q/1000).toFixed(1).replace(".",",")+" kg";q=q>=100?Math.round(q/10)*10:Math.max(5,Math.round(q/5)*5);return q+" g"}
+ if(u=="ml"){if(q>=1000)return (q/1000).toFixed(1).replace(".",",")+" l";q=q>=100?Math.round(q/10)*10:Math.max(5,Math.round(q/5)*5);return q+" ml"}
+ var st=q<1?.25:.5,v=Math.max(st,Math.round(q/st)*st);return {v:v,s:fr(v)}}
+function line(z){var u=z[1],a=amt(z[0],u),name=z[2];
+ if(typeof a=="string")return "<li><b>≈ "+a+"</b> "+name+"</li>";
+ if(u=="n")name=a.v<=1?z[2]:z[3];
+ var un=u=="Tasse"?(a.v>1?" Tassen ":" Tasse "):u=="n"?" ":" "+u+" ";
+ return "<li><b>≈ "+a.s+un.replace(/ $/,"")+"</b> "+name+"</li>"}
+function pic(r){return '<img class="pic" src="'+r.l+'" data-r="'+r.r+'" data-e="'+r.e+'" alt="" loading="lazy" onerror="fb(this)">'}
+function fb(i){if(!i.dataset.t){i.dataset.t=1;i.src=i.dataset.r}else{var d=document.createElement("div");d.className="ph";d.textContent=i.dataset.e;i.replaceWith(d)}}
+function draw(){
+ document.getElementById("pn").textContent=n;document.getElementById("pl").textContent=n==1?"Portion":"Portionen";
+ document.getElementById("rec").innerHTML=R.map(function(r){return '<article class="card">'+pic(r)+'<div class="body"><h3>'+r.t+'</h3><div class="salt">❗ '+r.salt+'</div><h4>Das brauchst du</h4><ul>'+r.z.map(line).join("")+'</ul><p style="margin:8px 0 0">'+r.g+'</p><h4>So geht es</h4><ol>'+r.s.map(function(x){return "<li>"+x+"</li>"}).join("")+'</ol>'+(r.d?'<p>'+r.d+'</p>':'')+'<div class="tip"><b>Tipps</b><ul>'+r.p.map(function(x){return "<li>"+x+"</li>"}).join("")+'</ul></div></div></article>'}).join("")}
+function shop(){document.getElementById("shop").innerHTML=S.map(function(s,i){return '<label><input type="checkbox" data-i="'+i+'"'+(H[i]?" checked":"")+'><span>'+s[0]+'<small>für: '+s[1]+'</small></span></label>'}).join("")}
+document.getElementById("shop").addEventListener("change",function(e){H[e.target.dataset.i]=e.target.checked;sv("haken",H)});
+document.getElementById("clr").onclick=function(){H={};sv("haken",H);shop()};
+document.getElementById("minus").onclick=function(){if(n>1){n--;sv("portionen",n);draw()}};
+document.getElementById("plus").onclick=function(){if(n<100){n++;sv("portionen",n);draw()}};
+draw();shop();
+if("serviceWorker" in navigator&&location.protocol.indexOf("http")==0)navigator.serviceWorker.register("service-worker.js").catch(function(){});
+</script>
+</body>
+</html>
