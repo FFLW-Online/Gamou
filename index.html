@@ -11,7 +11,7 @@
 :root{--bg:#fbf5ea;--ink:#2b1d14;--mut:#6b5646;--card:#fff;--acc:#b4532a;--leaf:#3d6b3a;--warn:#fde8e4;--warnb:#c0392b;--line:#e8dccb}
 @media(prefers-color-scheme:dark){:root{--bg:#1d1611;--ink:#f6ecde;--mut:#c4b29f;--card:#2a211a;--acc:#e08a5c;--leaf:#8fc58a;--warn:#4a2420;--warnb:#ff8a7a;--line:#40342a}}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:calc(130px + env(safe-area-inset-top,0px))}
+html{scroll-behavior:smooth;scroll-padding-top:calc(190px + env(safe-area-inset-top,0px))}
 body{margin:0;background:var(--bg);color:var(--ink);font:20px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
 header{position:sticky;top:0;z-index:5;background:var(--acc);color:#fff;padding:calc(10px + env(safe-area-inset-top,0px)) 14px 10px}
 header h1{margin:0 0 6px;font-size:1.25rem}
@@ -21,6 +21,11 @@ header h1{margin:0 0 6px;font-size:1.25rem}
 .step b{min-width:2.4ch;text-align:center;font-size:1.5rem}
 nav{display:flex;gap:8px;margin-left:auto}
 nav a{color:#fff;text-decoration:none;font-weight:700;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.18);font-size:.95rem}
+.chips{display:flex;gap:8px;margin-top:8px}
+.chip{flex:1;min-height:48px;border:2px solid #fff;border-radius:12px;background:transparent;color:#fff;font:inherit;font-weight:700}
+.chip.on{background:#fff;color:var(--acc)}
+.jump{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 20px}
+.jump a{display:block;text-align:center;text-decoration:none;font-weight:700;background:var(--card);color:var(--acc);border:2px solid var(--acc);border-radius:14px;padding:14px 8px}
 main{max-width:720px;margin:0 auto;padding:14px}
 section{margin:0 0 28px}
 h2{font-size:1.5rem;margin:6px 0 12px}
@@ -63,8 +68,16 @@ footer{text-align:center;padding:10px 14px 34px}
     <span id="pl">Portion</span>
     <nav><a href="#rezepte">Essen</a><a href="#einkauf">Einkauf</a><a href="#regeln">Regeln</a></nav>
   </div>
+  <div class="chips" role="group" aria-label="Schnell wählen">
+    <button type="button" class="chip" data-n="1">1 Person</button>
+    <button type="button" class="chip" data-n="5">5 Personen</button>
+    <button type="button" class="chip" data-n="10">10 Personen</button>
+  </div>
 </header>
 <main>
+<div class="jump" aria-label="Zu den Rezepten springen">
+  <a href="#r0">🥜 Domoda</a><a href="#r1">🫘 Bohnen</a><a href="#r2">🍗 Hähnchen</a><a href="#r3">🍲 Linsen</a>
+</div>
 <section id="rezepte">
   <h2>Was koche ich?</h2>
   <p class="legend">≈ heißt: ungefähr reicht. ❗ heißt: das ist wichtig.</p>
@@ -149,12 +162,14 @@ function pic(r){return '<img class="pic" src="'+r.l+'" data-r="'+r.r+'" data-e="
 function fb(i){if(!i.dataset.t){i.dataset.t=1;i.src=i.dataset.r}else{var d=document.createElement("div");d.className="ph";d.textContent=i.dataset.e;i.replaceWith(d)}}
 function draw(){
  document.getElementById("pn").textContent=n;document.getElementById("pl").textContent=n==1?"Portion":"Portionen";
- document.getElementById("rec").innerHTML=R.map(function(r){return '<article class="card">'+pic(r)+'<div class="body"><h3>'+r.t+'</h3><div class="salt">❗ '+r.salt+'</div><h4>Das brauchst du</h4><ul>'+r.z.map(line).join("")+'</ul><p style="margin:8px 0 0">'+r.g+'</p><h4>So geht es</h4><ol>'+r.s.map(function(x){return "<li>"+x+"</li>"}).join("")+'</ol>'+(r.d?'<p>'+r.d+'</p>':'')+'<div class="tip"><b>Tipps</b><ul>'+r.p.map(function(x){return "<li>"+x+"</li>"}).join("")+'</ul></div></div></article>'}).join("")}
+ document.querySelectorAll(".chip").forEach(function(c){c.classList.toggle("on",+c.dataset.n==n)});
+ document.getElementById("rec").innerHTML=R.map(function(r,i){return '<article class="card" id="r'+i+'">'+pic(r)+'<div class="body"><h3>'+r.t+'</h3><div class="salt">❗ '+r.salt+'</div><h4>Das brauchst du</h4><ul>'+r.z.map(line).join("")+'</ul><p style="margin:8px 0 0">'+r.g+'</p><h4>So geht es</h4><ol>'+r.s.map(function(x){return "<li>"+x+"</li>"}).join("")+'</ol>'+(r.d?'<p>'+r.d+'</p>':'')+'<div class="tip"><b>Tipps</b><ul>'+r.p.map(function(x){return "<li>"+x+"</li>"}).join("")+'</ul></div></div></article>'}).join("")}
 function shop(){document.getElementById("shop").innerHTML=S.map(function(s,i){return '<label><input type="checkbox" data-i="'+i+'"'+(H[i]?" checked":"")+'><span>'+s[0]+'<small>für: '+s[1]+'</small></span></label>'}).join("")}
 document.getElementById("shop").addEventListener("change",function(e){H[e.target.dataset.i]=e.target.checked;sv("haken",H)});
 document.getElementById("clr").onclick=function(){H={};sv("haken",H);shop()};
 document.getElementById("minus").onclick=function(){if(n>1){n--;sv("portionen",n);draw()}};
 document.getElementById("plus").onclick=function(){if(n<100){n++;sv("portionen",n);draw()}};
+document.querySelectorAll(".chip").forEach(function(c){c.onclick=function(){n=+c.dataset.n;sv("portionen",n);draw()}});
 draw();shop();
 if("serviceWorker" in navigator&&location.protocol.indexOf("http")==0)navigator.serviceWorker.register("service-worker.js").catch(function(){});
 </script>
