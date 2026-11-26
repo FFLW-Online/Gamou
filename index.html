@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#b4532a">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
-<title>Gesund kochen</title>
+<title>Gut kochen</title>
 <style>
 :root{--bg:#fbf5ea;--ink:#2b1d14;--mut:#6b5646;--card:#fff;--acc:#b4532a;--leaf:#3d6b3a;--warn:#fde8e4;--warnb:#c0392b;--line:#e8dccb}
 @media(prefers-color-scheme:dark){:root{--bg:#1d1611;--ink:#f6ecde;--mut:#c4b29f;--card:#2a211a;--acc:#e08a5c;--leaf:#8fc58a;--warn:#4a2420;--warnb:#ff8a7a;--line:#40342a}}
@@ -64,7 +64,7 @@ footer{text-align:center;padding:10px 14px 34px}
       <button type="button" id="plus" aria-label="Mehr">+</button>
     </div>
     <div class="jr" aria-label="Springen">
-      <a href="#r0">🥜 Domoda</a><a href="#r1">🫘 Bohnen</a><a href="#r2">🍗 Hähnchen</a><a href="#r3">🍲 Linsen</a><a href="#einkauf">🛒 Einkauf</a><a href="#regeln">🧂 Regeln</a>
+      <a href="#r0">🥜 Domoda</a><a href="#r1">🫘 Bohnen</a><a href="#r2">🍗 Hähnchen</a><a href="#r3">🍲 Linsen</a><a href="#r4">🥣 Hafer</a><a href="#r5">🥔 Kartoffel</a><a href="#r6">🐟 Fisch</a><a href="#einkauf">🛒 Einkauf</a><a href="#regeln">🧂 Regeln</a>
     </div>
   </div>
 </header>
@@ -130,9 +130,27 @@ var R=[
  z:[[4,"EL","Linsen"],[1,"n","Kartoffel","Kartoffeln"],[0.5,"n","Karotte","Karotten"],[0.5,"n","kleine Zwiebel","kleine Zwiebeln"],[1,"TL","Rapsöl"],[200,"ml","Wasser"]],
  g:"Gewürze: Pfeffer, Majoran, 1 Lorbeerblatt. Am Ende etwas Essig.",
  s:["Zwiebel klein schneiden. In Öl braten.","Linsen kurz abspülen.","Linsen, Kartoffel und Karotte dazu. Alles klein schneiden.","Wasser dazu.","30 bis 40 Minuten kochen lassen.","Mit Pfeffer, Majoran und Essig würzen."],
- p:["Wann die Linsen weich sind, merkst du nur beim Probieren. Es hängt von der Sorte ab.","Das Lorbeerblatt vor dem Essen herausnehmen."]}
+ p:["Wann die Linsen weich sind, merkst du nur beim Probieren. Es hängt von der Sorte ab.","Das Lorbeerblatt vor dem Essen herausnehmen."]},
+{t:"Haferflocken mit Banane",m:"Frühstück",e:"🥣",l:"bilder/hafer.jpg",r:"https://images.unsplash.com/photo-1517673400267-0251440c45dc?auto=format&fit=crop&w=800&q=80",
+ salt:"Kein Salz nötig. Nimm ungesalzene Nüsse.",
+ z:[[50,"g","Haferflocken"],[1,"n","Banane","Bananen"],[100,"ml","Milch oder Naturjoghurt"]],
+ g:"Dazu: ein paar ungesalzene Nüsse.",
+ s:["Haferflocken in eine Schüssel geben.","Milch oder Joghurt dazu.","Banane in Stücke schneiden. Dazu geben.","Nüsse darüber streuen."],
+ p:["Mit warmer Milch wird es wie ein Brei.","Eine reife Banane ist süßer. Dann braucht man keinen Zucker."]},
+{t:"Ofenkartoffel mit Kräuterquark",m:"Mittagessen",e:"🥔",l:"bilder/kartoffel.jpg",r:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=80",
+ salt:"Kein Salz. Würze den Quark mit Knoblauch, Petersilie und Zitrone. Thunfisch aus der Dose ist oft salzig: ohne Salz kaufen oder weglassen.",
+ z:[[1,"n","Kartoffel (oder Süßkartoffel)","Kartoffeln (oder Süßkartoffeln)"],[100,"g","Magerquark"],[0.5,"n","Knoblauchzehe","Knoblauchzehen"],[1,"TL","Zitronensaft"]],
+ g:"Dazu: frische Petersilie. Wer will: Salat oder Thunfisch.",
+ s:["Backofen auf 200 Grad heizen.","Kartoffel gut waschen.","Mit einer Gabel ein paar Mal einstechen.","Etwa 45 bis 60 Minuten im Ofen backen.","Quark mit klein geschnittenem Knoblauch, Petersilie und Zitrone verrühren.","Kartoffel aufschneiden. Quark darauf geben."],
+ p:["Mit einer Gabel prüfen: Ist die Kartoffel innen weich, ist sie fertig.","Die Backzeit hängt von der Größe der Kartoffel ab."]},
+{t:"Fisch mit Tomatensalat",m:"Abendessen",e:"🐟",l:"bilder/fisch.jpg",r:"https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=800&q=80",
+ salt:"Kein Salz. Nimm frischen Fisch, keinen geräucherten oder eingelegten. Würze mit Zitrone.",
+ z:[[1,"n","Stück Fisch (z. B. Makrele)","Stück Fisch (z. B. Makrele)"],[1.33,"n","Tomate","Tomaten"],[0.5,"n","kleine Zwiebel","kleine Zwiebeln"],[2,"TL","Zitronensaft"]],
+ g:"Dazu: etwas Vollkornbrot oder Reis.",
+ s:["Backofen auf 200 Grad heizen.","Fisch in eine Form legen. Mit etwas Zitronensaft beträufeln.","15 bis 20 Minuten im Ofen backen.","Tomaten und Zwiebel klein schneiden. Mit Zitronensaft mischen.","Fisch mit dem Tomatensalat essen."],
+ p:["Der Fisch ist fertig, wenn er sich mit der Gabel leicht teilen lässt und nicht mehr glasig ist.","Die Backzeit hängt von der Dicke des Fisches ab."]}
 ];
-var S=[["Erdnussbutter ohne Salz","Domoda"],["Haferflocken","Frühstück"],["Bohnen, Linsen","Topf, Eintopf"],["Tomaten aus der Dose","Saucen"],["Süßkartoffel","Domoda"],["Karotten, Paprika, Spinat","Gemüse"],["Zwiebeln, Knoblauch, Ingwer","Würze"],["Rapsöl","Braten"],["Naturjoghurt oder Quark","Frühstück"],["Hähnchen oder Fisch","Pfanne"],["Reis, Kartoffeln","Beilage"],["Bananen, Äpfel","Obst"]];
+var S=[["Erdnussbutter ohne Salz","Domoda"],["Haferflocken","Frühstück"],["Bohnen, Linsen","Topf, Eintopf"],["Tomaten aus der Dose","Saucen"],["Süßkartoffel","Domoda"],["Karotten, Paprika, Spinat","Gemüse"],["Zwiebeln, Knoblauch, Ingwer","Würze"],["Rapsöl","Braten"],["Naturjoghurt oder Quark","Frühstück"],["Hähnchen oder Fisch","Pfanne"],["Reis, Kartoffeln","Beilage"],["Bananen, Äpfel","Obst"],["Zitrone, Petersilie","Würze, Quark"],["Frische Tomaten","Salat"]];
 var n=1,H={};
 function ld(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
 function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
@@ -154,7 +172,7 @@ function fb(i){if(!i.dataset.t){i.dataset.t=1;i.src=i.dataset.r}else{var d=docum
 function draw(){
  document.getElementById("pn").textContent=n;document.getElementById("pl").textContent="Pers.";
  document.querySelectorAll(".chip").forEach(function(c){c.classList.toggle("on",+c.dataset.n==n)});
- document.getElementById("rec").innerHTML=R.map(function(r,i){return '<article class="card" id="r'+i+'">'+pic(r)+'<div class="body"><h3>'+r.t+'</h3><div class="salt">❗ '+r.salt+'</div><h4>Das brauchst du</h4><ul>'+r.z.map(line).join("")+'</ul><p style="margin:8px 0 0">'+r.g+'</p><h4>So geht es</h4><ol>'+r.s.map(function(x){return "<li>"+x+"</li>"}).join("")+'</ol>'+(r.d?'<p>'+r.d+'</p>':'')+'<div class="tip"><b>Tipps</b><ul>'+r.p.map(function(x){return "<li>"+x+"</li>"}).join("")+'</ul></div></div></article>'}).join("")}
+ document.getElementById("rec").innerHTML=R.map(function(r,i){return '<article class="card" id="r'+i+'">'+pic(r)+'<div class="body"><h3>'+r.e+' '+r.t+'</h3>'+(r.m?'<p class="sub">'+r.m+'</p>':'')+'<div class="salt">❗ '+r.salt+'</div><h4>Das brauchst du</h4><ul>'+r.z.map(line).join("")+'</ul><p style="margin:8px 0 0">'+r.g+'</p><h4>So geht es</h4><ol>'+r.s.map(function(x){return "<li>"+x+"</li>"}).join("")+'</ol>'+(r.d?'<p>'+r.d+'</p>':'')+'<div class="tip"><b>Tipps</b><ul>'+r.p.map(function(x){return "<li>"+x+"</li>"}).join("")+'</ul></div></div></article>'}).join("")}
 function shop(){document.getElementById("shop").innerHTML=S.map(function(s,i){return '<label><input type="checkbox" data-i="'+i+'"'+(H[i]?" checked":"")+'><span>'+s[0]+'<small>für: '+s[1]+'</small></span></label>'}).join("")}
 document.getElementById("shop").addEventListener("change",function(e){H[e.target.dataset.i]=e.target.checked;sv("haken",H)});
 document.getElementById("clr").onclick=function(){H={};sv("haken",H);shop()};
